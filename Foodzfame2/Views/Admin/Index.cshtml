@@ -1,0 +1,180 @@
+﻿@model Foodzfame2.Models.AddRecipe
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Admin";
+
+}
+
+<div class="row defaultHeader">
+    <div class="overlay">
+        <div class="container">
+            <div class="recipeTitle">
+                Our Food blog
+            </div>
+        </div>
+    </div>
+</div>
+<div class="marTop2pr"></div>
+<div class="row"><h3>Add Dish</h3></div>
+<div class="marTop2pr"></div>
+<div class="row">
+    <div class="col-sm-4">
+        <form asp-action="AddRecipe" method="post" enctype="multipart/form-data">
+            <table class="d-xl-table">
+                <tr class="d-xl-table-row">
+                    <td class="d-xl-table-cell"><label asp-for="DishName"></label></td>
+                    <td class="d-xl-table-cell"><input class="width100percent" asp-for="DishName" /></td>
+                </tr>
+                <tr class="d-xl-table-row">
+                    <td class="d-xl-table-cell"><label asp-for="Desc"></label></td>
+                    <td class="d-xl-table-cell"><textarea class="width100percent" asp-for="Desc"></textarea></td>
+                </tr>
+                <tr class="d-xl-table-row">
+                    <td class="d-xl-table-cell"><label class="width100percent" asp-for="DishCategoryId"></label></td>
+                    @{
+                        var lst = (List<SelectListItem>)TempData["SubCategory"];
+                    }
+                    <td class="d-xl-table-cell"><select asp-for="DishCategoryId" asp-items="lst"></select></td>
+                </tr>
+                <tr class="d-xl-table-row">
+                    <td class="d-xl-table-cell"><label asp-for="EditorsChoice"></label></td>
+                    <td class="d-xl-table-cell"><input class="width100percent" asp-for="EditorsChoice" /></td>
+                </tr>
+                <tr class="d-xl-table-row">
+                    <td class="d-xl-table-cell"><label asp-for="Image">Upload</label></td>
+                    <td class="d-xl-table-cell"><input class="width100percent" asp-for="Image" /></td>
+                </tr>
+                <tr class="d-xl-table-row">
+                    <td class="d-xl-table-cell"><label asp-for="CookingTime"></label></td>
+                    <td class="d-xl-table-cell"><input class="width100percent" asp-for="CookingTime" /></td>
+                </tr>
+                <tr class="d-xl-table-row">
+                    <td class="d-xl-table-cell"><label asp-for="CookingMethod"></label></td>
+                    <td class="d-xl-table-cell">
+                        <select asp-for="CookingMethod">
+                            <option value="1">DeepFried</option>
+                            <option value="2">PanFried</option>
+                            <option value="3">Boiled</option>
+                            <option value="4">Dum</option>
+                            <option value="5">PressureCooked</option>
+                            <option value="6">Saute</option>
+                            <option value="7">Steamed</option>
+                            <option value="8">Baked</option>
+                            <option value="9">Other</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr class="d-xl-table-row">
+                    <td class="d-xl-table-cell"><label asp-for="Yields">Serving Qty</label></td>
+                    <td class="d-xl-table-cell"><input class="width100percent" asp-for="Yields" /></td>
+                </tr>
+                <tr class="d-xl-table-row">
+                    <td class="d-xl-table-cell"><label asp-for="VideoLink"></label></td>
+                    <td class="d-xl-table-cell"><input class="width100percent" asp-for="VideoLink" /></td>
+                </tr>
+                <tr class="d-xl-table-row">
+                    <td class="d-xl-table-cell"><label asp-for="RecipeDifficulty"></label></td>
+                    <td class="d-xl-table-cell">
+                        <select asp-for="RecipeDifficulty">
+                            <option value="1">Low</option>
+                            <option value="2">Medium</option>
+                            <option value="3">High</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr class="d-xl-table-row">
+                    <td class="d-xl-table-cell"><label asp-for="Tags"></label></td>
+                    <td class="d-xl-table-cell"><input class="width100percent" asp-for="Tags" /></td>
+                </tr>
+                <tr class="d-xl-table-row">
+                    <td class="d-xl-table-cell"><label asp-for="CookingInstruction"></label></td>
+                    <td class="d-xl-table-cell"><textarea class="width100percent" asp-for="CookingInstruction"></textarea></td>
+                </tr>
+                <tr>
+                    <td>
+                        Ingredients
+                    </td>
+                    <td>
+                        <ul style="columns:3;list-style:none;">
+                            @for (int i = 0; i < Model.Ings.Count; i++)
+                            {
+                                <li>
+                                    <input type="checkbox" asp-for="@Model.Ings[i].isChecked" />
+                                    <label asp-for="Ings[i].isChecked">@Model.Ings[i].IngName</label>
+                                    <input type="hidden" asp-for="@Model.Ings[i].Id" />
+                                    <input type="hidden" asp-for="@Model.Ings[i].IngName" />
+                                </li>
+                            }
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" class="btn btn-success" />
+        </form>
+    </div>
+    <div class="col-sm-4">
+        <h3>Add Category</h3>
+        <form asp-action="AddCategory" method="post">
+            <table>
+                <tr>
+                    <td><label asp-for="Category.Category1"></label></td>
+                    <td><input class="width100percent" type="text" asp-for="Category.Category1" /></td>
+                </tr>
+                <tr>
+                    <td><label asp-for="Category.Des"></label></td>
+                    <td><textarea class="width100percent" asp-for="Category.Des"></textarea></td>
+                </tr>
+            </table>
+            <input type="submit" class="btn btn-success" />
+        </form>
+        <br />
+        <h3>Add SubCategory</h3>
+        <form asp-action="AddSubCategory" method="post">
+            <table>
+                <tr>
+                    <td><label asp-for="Subcategory.Category"></label></td>
+                    <td><input class="width100percent" type="text" asp-for="Subcategory.Category" /></td>
+                </tr>
+                <tr>
+                    <td><label asp-for="Subcategory.Des"></label></td>
+                    <td><textarea class="width100percent" asp-for="Subcategory.Des"></textarea></td>
+                </tr>
+                <tr>
+                    <td><label asp-for="Subcategory.CategoryId"></label></td>
+                    @{
+                        var sblst = (List<SelectListItem>)TempData["Category"];
+                    }
+                    <td><select asp-for="Subcategory.CategoryId" asp-items="sblst"></select></td>
+                </tr>
+            </table>
+            <input type="submit" class="btn btn-success" />
+        </form>
+    </div>
+    <div class="col-sm-4">
+        <h3>Add Ingredients</h3>
+        <form asp-action="AddIng" method="post">
+            <table>
+                <tr>
+                    <td><label asp-for="Ingredient.IngName"></label></td>
+                    <td><input class="width100percent" asp-for="Ingredient.IngName" /></td>
+                </tr>
+                <tr>
+                    <td><label asp-for="Ingredient.Qty"></label></td>
+                    <td><input class="width100percent" asp-for="Ingredient.Qty" /></td>
+                </tr>
+            </table>
+            <input type="submit" class="btn btn-success" />
+        </form>
+    </div>
+</div>
+<div class="marTop2pr"></div>
+<div class="row">
+    @if(!string.IsNullOrEmpty(Convert.ToString(ViewBag.Success)))
+    {
+        <h6>@Convert.ToString(ViewBag.Success)</h6>
+    }
+</div>
+<div class="marTop2pr"></div>
+

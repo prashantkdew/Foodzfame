@@ -1,0 +1,92 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var gallery = (List<Foodzfame2.Models.GalleryModel>)(ViewBag.Gallery);
+    if (gallery == null || gallery.Count == 0)
+        ViewData["Title"] = "No Gallery found";
+    else
+        ViewData["Title"] = gallery[0].recipeName + " Gallery";
+    int counter = 0;
+
+}
+@if (gallery == null || gallery.Count == 0)
+{
+    <div class="row defaultHeader">
+        <div class="overlay">
+            <div class="container">
+                <div class="recipeTitle">
+                    No Gallery Images Uploaded
+                </div>
+                <a style="color:white;" href="javascript:history.back()">Go Back</a>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row defaultHeader">
+        <div class="overlay">
+            <div class="container">
+                <div class="recipeTitle">
+                    @gallery[0]?.recipeName Image Gallery
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="marTop2pr"></div>
+
+    <div class="section-title">@gallery[0]?.recipeName Pictures</div>
+    <div class="section-desc ">
+        Pictures taken during preparation of dish which will help in making the dish more accurate as the recipe. Click on the Image to Preview.
+    </div>
+    <div class="marTop2pr"></div>
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <a class="dotoRecipe" asp-controller="Recipe" asp-action="Recipe" asp-route-id="@gallery[0]?.DishId"><span class="page-link">Go to Recipe</span></a>
+            </div>
+        </div>
+    </div>
+    <div class="marTop2pr"></div>
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                @foreach (var item in gallery)
+                {
+                    var base64 = Convert.ToBase64String(item.Img);
+                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                    <div class="col-sm-3 padding-bottom3pr">
+                        <div class="border-radius">
+                            <img src='@imgSrc' name="galleryImg" class="zoom" id="galleryImg_@counter" onclick="OpenModal(@counter)" />
+                            <div class="dishTitle" id="galleryTitle_@counter" style=" text-align: center; margin-bottom: 2%;">
+                                @item.Title
+                            </div>
+                        </div>
+                    </div>
+
+                    counter++;
+                }
+            </div>
+        </div>
+    </div>
+}
+<div id="myModal" class="modal">
+    <div class="modalContainer">
+        <div style=" width: 100%; background: white; line-height: 2; font-size: larger;">
+            <i class="fa fa-chevron-circle-left" style="cursor: pointer;padding-left: 1%;" aria-hidden="true"></i>
+            <i class="fa fa-chevron-circle-right" style="cursor:pointer;" aria-hidden="true"></i>
+            <span class="close" style="cursor:pointer;">&times;</span>
+        </div>
+
+        <img class="modal-content" id="imgPreview">
+        <input type="hidden" id="hdnPreview" value="0" />
+        <div id="caption"></div>
+    </div>
+</div>
+
+
+<div class="marTop2pr"></div>
+<partial name="_MostPopularPartial" />
+<div class="marTop2pr"></div>
+<partial name="_SubscribePartial" />

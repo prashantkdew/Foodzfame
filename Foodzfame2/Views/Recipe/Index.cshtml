@@ -1,0 +1,299 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var dish = (Foodzfame.Data.Entities.Dish)ViewBag.Dish;
+    ViewData["Title"] = dish.DishName;
+    var base64 = Convert.ToBase64String(dish.Img);
+    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+}
+<div class="row defaultHeader" style="background-image: url('@imgSrc')">
+    <div class="overlay">
+        <div class="container">
+                <div class="recipeTitle">
+                    @dish.DishName
+                </div>
+            <a asp-action="Gallery" asp-route-id="@dish.Id">
+                <span style="        color: white;
+        font-family: cursive;
+        padding-left: 5%;
+">Goto Gallery</span>
+            </a>
+        </div>
+    </div>
+</div>
+<div class="marTop2pr"></div>
+
+<div class="row">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="modal-title desc">Description</div>
+                <div class="detailDesc">
+                    @dish.Desc
+                </div>
+            </div>
+            @*<div class="col-sm-4 box-shadow">
+                <div class="row hbb">
+                    <div class="col-sm-1 lbu">
+                        <i class="fa fa-folder" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-sm-6 lbu">
+                        <div class="dishwrapTitle">Category</div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="dishwrapDetail">@dish.DishCategory.Category</div>
+                    </div>
+                </div>
+                <div class="row hbb">
+                    <div class="col-sm-1 lbu">
+                        <i class="fa fa-hourglass-half" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-sm-6 lbu">
+                        <div class="dishwrapTitle">Total Time</div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="dishwrapDetail">@dish.CookingTime</div>
+                    </div>
+                </div>
+                <div class="row hbb">
+                    <div class="col-sm-1 lbu">
+                        <i class="fa fa-cog" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-sm-6 lbu">
+                        <div class="dishwrapTitle">Difficulty</div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="dishwrapDetail">@((Foodzfame.Data.Enums.DifficultyEnum)dish.RecipeDifficulty)</div>
+                    </div>
+                </div>
+                <div class="row hbb">
+                    <div class="col-sm-1 lbu">
+                        <i class="fa fa-cutlery" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-sm-6 lbu">
+                        <div class="dishwrapTitle">Yields</div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="dishwrapDetail">@dish.Yields</div>
+                    </div>
+                </div>
+                <div class="row hbb">
+                    <div class="col-sm-1 lbu">
+                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-sm-6 lbu">
+                        <div class="dishwrapTitle">Likes</div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div id="likes" class="dishwrapDetail">@dish.Likes</div>
+                    </div>
+                </div>
+                <div class="row hbb">
+                    <div class="col-sm-1 lbu">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                    </div>
+                    <div class="col-sm-6 lbu">
+                        <div class="dishwrapTitle">Ratings</div>
+                    </div>
+                    <div class="col-sm-5">
+                        <div class="dishwrapDetail">@string.Format("{0:F1}", dish.Reviews.Average(x => x.Rating))</div>
+                    </div>
+                </div>
+            </div>*@
+            <div class="col-sm-4 box-shadow">
+                <table style="width:100%" class="dishInfo">
+                    <tr class="lbu">
+                        <td>
+                            <i class="fa fa-folder" aria-hidden="true"></i>
+
+                        </td>
+                        <td>
+                            <div class="dishwrapTitle">Category</div>
+
+                        </td>
+                        <td>
+                            <div class="dishwrapDetail">@dish.DishCategory.Category</div>
+
+                        </td>
+                    </tr>
+                    <tr class="lbu">
+                        <td>
+                            <i class="fa fa-folder" aria-hidden="true"></i>
+
+                        </td>
+                        <td>
+                            <div class="dishwrapTitle">Total Time</div>
+
+                        </td>
+                        <td>
+                            <div class="dishwrapDetail">@dish.CookingTime</div>
+
+                        </td>
+                    </tr>
+                    <tr class="lbu">
+                        <td>
+                            <i class="fa fa-folder" aria-hidden="true"></i>
+
+                        </td>
+                        <td>
+                            <div class="dishwrapTitle">Difficulty</div>
+
+                        </td>
+                        <td>
+                            <div class="dishwrapDetail">@((Foodzfame.Data.Enums.DifficultyEnum)dish.RecipeDifficulty)</div>
+
+                        </td>
+                    </tr>
+                    <tr class="lbu">
+                        <td>
+                            <i class="fa fa-folder" aria-hidden="true"></i>
+
+                        </td>
+                        <td>
+                            <div class="dishwrapTitle">Yields</div>
+
+                        </td>
+                        <td>
+                            <div class="dishwrapDetail">@dish.Yields</div>
+
+                        </td>
+                    </tr>
+                    <tr class="lbu">
+                        <td>
+                            <i class="fa fa-folder" aria-hidden="true"></i>
+
+                        </td>
+                        <td>
+                            <div class="dishwrapTitle">Likes</div>
+
+                        </td>
+                        <td>
+                            <div class="dishwrapDetail" id="likes">@dish.Likes</div>
+
+                        </td>
+                    </tr>
+                    <tr class="lbu">
+                        <td>
+                            <i class="fa fa-folder" aria-hidden="true"></i>
+
+                        </td>
+                        <td>
+                            <div class="dishwrapTitle">Ratings</div>
+
+                        </td>
+                        <td>
+                            <div class="dishwrapDetail">@string.Format("{0:F1}", dish.Reviews.Average(x => x.Rating))</div>
+
+                        </td>
+                    </tr>
+                </table>
+</div>
+            </div>
+        </div>
+</div>
+<div class="marTop2pr"></div>
+
+<div class="row">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="desc">Instructions</div>
+                <ul style="list-style:decimal">
+                    @foreach(var item in dish.CookingInstruction.Split(new string[] { Environment.NewLine }, StringSplitOptions.None))
+                    {
+                        <li style=" padding-bottom: 2%;">@item</li>
+                    }
+                </ul>
+            </div>
+            <div class="col-sm-4 box-shadow">
+                <div class="desc">Ingredients</div>
+                <br />
+                @foreach (var item in dish.DishIngMaps)
+                {
+                <div class="row padding-bottom3pr">
+                    <div class="col-sm-8">@item.Ing.IngName</div>
+                    <div class="col-sm-4 float-right">@item.Ing.Qty</div>
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="marTop2pr"></div>
+
+<div class="row">
+    <div class="container">
+        <div class="row">
+
+        </div>
+    </div>
+</div>
+<div class="marTop2pr"></div>
+<partial name="_SubscribePartial" />
+<div class="marTop2pr"></div>
+<div class="row">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="modal-title desc">Add Review</div>
+                <div class="row">
+                    <div class="col-sm-10">
+                        <span>Rate</span>
+                        <i class="fa fa-star-o" aria-hidden="true" id="rat1" onclick="rateRecipe(1)"></i>
+                        <i class="fa fa-star-o" aria-hidden="true" id="rat2" onclick="rateRecipe(2)"></i>
+                        <i class="fa fa-star-o" aria-hidden="true" id="rat3" onclick="rateRecipe(3)"></i>
+                        <i class="fa fa-star-o" aria-hidden="true" id="rat4" onclick="rateRecipe(4)"></i>
+                        <i class="fa fa-star-o" aria-hidden="true" id="rat5" onclick="rateRecipe(5)"></i>
+                    </div>
+                    <div class="col-sm-2 float-right">
+                        <span>Like</span>
+                        <i class="fa fa-thumbs-o-up" aria-hidden="true" id="like" onclick="likeRecipe(@dish.Id)"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="reviewContainer">
+                        <input id="ReviewerName" type="text" class="inputCtrl" placeholder="Please enter your name..." />
+                        <br />
+                        <input id="ReviewTitle" type="text" class="inputCtrl" placeholder="Please enter Review Title..." />
+                        <br />
+                        <textarea class="inputCtrl" id="reviewta" placeholder="Max 500 chars..."></textarea>
+                        <label id="leftChars">0 of 500</label>
+                        <input type="submit" class="reviewSubmit btn btn-success" onclick="addReview(@dish.Id)" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 box-shadow">
+                <div class="modal-title desc">Social Media</div>
+                <div class="row">
+                    <a href="https://www.instagram.com/foodzfame/" target="_blank">  <i class="fa fa-instagram instagram" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="marTop2pr"></div>
+<div class="row"  style=" border-top: 1px solid;">
+    <div id="reviewComments" class="col-sm-8">
+        <div class="modal-title desc">Reviews</div>
+        @foreach (var item in dish.Reviews)
+        {
+        <div class="row">
+            <div class="col-sm-1">
+                <span>@item.Rating</span>
+                <i class="fa fa-star" aria-hidden="true"></i>
+            </div>
+            <div class="col-sm-8 reviewerName">@item.ReviewerName says</div>
+            <div class="col-sm-3 float-right">@item.ReviewDate?.ToString("ddd, MMM dd yyyy")</div>
+        </div>
+        <div class="row" style="padding-left: 10%;font-weight: 500;">@item.ReviewTitle</div>
+        <div class="row">
+            <div class="reviews">
+                @item.Review1
+            </div>
+        </div>
+        }
+    </div>
+    <div class="col-sm-4"></div>
+</div>
+

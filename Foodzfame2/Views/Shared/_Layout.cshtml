@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Foodzfame</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cherry+Swash:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="myNav">
+        <div class="container">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">Foodzfame</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Recipe" asp-action="Index">Recipe</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Blog" asp-action="Index">Blog</a>
+                    </li>
+                    <li class="nav-item" id="navCategory">
+                        <a class="nav-link" asp-controller="Category" asp-action="Index">Category</a>
+                    </li>
+                    <li class="nav-item" style="padding-right: 0%;">
+                        <a class="nav-link" asp-controller="Home" asp-action="About">About</a>
+                    </li>
+                    <li class="nav-item globalSearch">
+                        <form class="navbar-form" role="search">
+                            <div class="form-group" id="searchForm">
+                                <input type="text" id="dishSearch" class="form-control" name="dishName"  style="float:right" />
+                                <input type="hidden" id="hfdishSearch" name="id" />
+                            </div>
+                            <button type="submit" style="float:right;margin-right:-150%;" class="btn btn-default" asp-controller="Recipe" asp-action="Recipe" asp->
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    @RenderBody()
+
+    <div class="row footer">
+        <div class="container">
+            Copyright 	&copy; 2021 foodzfame, all rights reserved.
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#dishSearch").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Recipe/AutoComplete/',
+                        data: { "prefix": request.term },
+                        type: "POST",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return item;
+                            }))
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                    $("#hfdishSearch").val(i.item.val);
+                },
+                minLength: 1
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $(window).scroll(function () { // check if scroll event happened
+                if ($(document).scrollTop() > 500) { // check if user scrolled more than 50 from top of the browser window
+                    $("#myNav").css("background-color", "yellowgreen"); // if yes, then change the color of class "navbar-fixed-top" to white (#f8f8f8)
+                } else {
+                    $("#myNav").css("background-color", "transparent"); // if not, change it back to transparent
+                }
+            });
+        });
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

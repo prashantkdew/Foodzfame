@@ -1,0 +1,106 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var input = (Foodzfame2.Models.CategoryWise)ViewBag.CategoryWise;
+    bool isCat = false, isSubCat = false;
+    if (input.Category == 0 & input.SubCategory == 0)
+    {
+        ViewData["Title"] = "Category";
+    }
+    else if (input.Category != 0 & input.SubCategory == 0)
+    {
+        isCat = true;
+        ViewData["Title"] = Convert.ToString(ViewBag.CategoryName);
+    }
+    else
+    {
+        isSubCat = true;
+        ViewData["Title"] = Convert.ToString(ViewBag.SubCategoryName);
+    }
+
+}
+
+<div class="row defaultHeader">
+    <div class="overlay">
+        <div class="container">
+            <div class="recipeTitle">
+                Recipes by category
+            </div>
+        </div>
+    </div>
+</div>
+<div class="marTop2pr"></div>
+<div class="row">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3 box-shadow">
+                <a asp-action="Index"><div class="modal-title desc">Category</div></a>
+                @if (!isCat && !isSubCat)
+                {
+                    @foreach (var item in input.Categories)
+                    {
+                        <a asp-action="Index" asp-route-Category="@item.Id" style="color:black;">
+                            <h5 class="marBottom3pr">@item.Category1</h5>
+                        </a>
+                    }
+                }
+                else if (isCat || isSubCat)
+                {
+            <a href="#" style="color:black;">
+                <a asp-action="Index" asp-route-Category="@input.Category"  style="color:black;">
+                    <h5 class="marBottom3pr">@ViewBag.CategoryName</h5>
+                </a>
+            </a>
+                    @foreach (var item in input.SubCategories)
+                    {
+                        <a asp-action="Index" asp-route-Category="@input.Category" asp-route-SubCategory="@item.Id" style="color:black;"><h6 style="padding-left:5%;padding-bottom:5%;">@item.Category</h6></a>
+
+                    }
+                }
+            </div>
+            <div class="col-sm-9">
+                <div class="container">
+                    <div class="row">
+                        <ul class="breakcrum">
+                            <li><a asp-action="Index"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                            @if (isCat)
+                            {
+                                <li><a href="#">@ViewBag.CategoryName</a></li>
+                            }
+                            @if (isSubCat)
+                            {
+                                <li><a asp-action="Index" asp-route-Category="@input.Category">@ViewBag.CategoryName</a></li>
+                                <li><a href="#">@ViewBag.SubCategoryName</a></li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="row">
+                        @foreach (var item in input.Dishes)
+                        {
+                        <div class="col-sm-4 padding-bottom3pr">
+                            <div class="border-radius">
+                                @{ 
+                                    var base64 = Convert.ToBase64String(item.Img);
+                                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                    if (item.Desc != null && item.Desc.Length > 20)
+                                        item.Desc = item.Desc.Substring(0, 19);
+                                }
+                                <a asp-controller="Recipe" asp-action="Recipe" asp-route-id="@item.Id"><img src="@imgSrc" class="zoom" /></a>
+                                <div class="dishTitle">@item.DishName</div>
+                                <div class="dishDesc">@item.Desc ...</div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="marTop2pr"></div>
+<partial name="_MostPopularPartial" />
+
+<div class="marTop2pr"></div>
+<div class="marTop2pr marBottom3pr"></div>

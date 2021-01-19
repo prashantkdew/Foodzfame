@@ -1,0 +1,122 @@
+﻿@{
+    ViewData["Title"] = "Home";
+    var category=(Foodzfame2.Models.Counters)ViewBag.Category;
+    var blogs= (List<Foodzfame.Data.Entities.Blog>)(ViewBag.Blogs);
+}
+<div class="row ffHome">
+    <div class="container">
+        <div class="searchBox">
+            <span class="searchBoxTitle">Even better than an expensive cookbook</span>
+            <br />
+            <span style="font-size: larger;">Learn how to make your favorite dishes restaurant style  </span>
+            <br />
+            <br />
+            <div class="searchInput">
+                <input type="text" id="recipeSearch"
+                       style="      background: transparent;
+                        border: 1px solid;
+                        color: white;
+                        overflow: hidden;
+                        border-radius: 1.5em;
+                        width: 49%;
+                        min-width: 260px;
+                    " placeholder="Search recipe..." />
+                <input type="text" id="categorySearch"
+                       style="    background: transparent;
+                        border: 1px solid;
+                        color: white;
+                        overflow: hidden;
+                        border-radius: 1.5em;
+                        width: 49%;
+                        min-width: 260px;
+                    " placeholder="Search category..." />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="marTop2pr"></div>
+<div class="section-title">Recipes By Category</div>
+<div class="section-desc">
+    Recipes organized by the type of dish. Having same cooking style or may be cuisin and may help you decide what could be your today's Menu.'
+</div>
+<div class="marTop2pr"></div>
+@{
+    var recipesByCategory = (List<Foodzfame.Data.Entities.Dish>)ViewBag.recipeByCategory;
+}
+<div class="row">
+    <div class="container">
+        <div class="row">
+            @foreach (var dish in recipesByCategory)
+            {
+                <div class="col-sm-3 padding-bottom3pr">
+                    <div class="border-radius">
+                        @{
+                            var base64 = Convert.ToBase64String(dish.Img);
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                        }
+                        <a asp-controller="Recipe" asp-action="Recipe" asp-route-id="@dish.Id"><img src='@imgSrc' class="zoom" /></a>
+                        <div class="dishTitle">
+                            @dish.DishCategory.Category
+                        </div>
+                        <div class="dishDesc">@dish.DishCategory.Des</div>
+                    </div>
+                </div>
+            }
+            </div>
+    </div>
+
+</div>
+<partial name="_SubscribePartial" />
+
+<div class="marTop2pr"></div>
+<div class="section-title">From Our Food Blog</div>
+<div class="section-desc">
+    Our food blog is curated with best tips and tricks and food hacks to enjoy your meal and stay healthy. You may also find allergic information about foods.
+</div>
+<div class="marTop2pr"></div>
+
+<div class="row">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4 leftCategory padding-bottom3pr">
+                <span class="categoryTitle">Category</span>
+                <br />
+                <br />
+                @foreach (var item in category.counts)
+                {
+            <a asp-controller="Category" asp-action="Index" asp-route-Category="@item.CategoryId"><span class="category">@item.CategoryName</span></a>
+                <br />
+                <span class="categoryCount">@item.RecipeCount Recipes, @item.SubCatCount SubCategories </span>
+                <br />
+                <br />
+                }
+            </div>
+            <div class="col-sm-8">
+                <div class="row">
+                    @foreach (var item in blogs)
+                    {
+                            var base64 = Convert.ToBase64String(item.Img);
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                            if (item.Benefits != null && item.Benefits.Length > 20)
+                                item.Benefits = item.Benefits.Substring(0, 19);
+                        
+                        <div class="col-sm-6 padding-bottom3pr">
+                            <div class="border-radius">
+                                <a asp-controller="Blog" asp-action="Post" asp-route-id="@item.Id"> <img src="@imgSrc" class="zoom" /></a>
+                                <div class="dishTitle">@item.Title</div>
+                                <div class="dishDesc">@item.Benefits</div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="marTop2pr"></div>
+<partial name="_MostPopularPartial" />
+
+<div class="marTop2pr"></div>
+<div class="marTop2pr">&nbsp;</div>
+

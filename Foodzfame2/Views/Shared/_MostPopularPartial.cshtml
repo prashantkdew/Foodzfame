@@ -1,0 +1,42 @@
+﻿<div class="section-title">Most Popular Recipes</div>
+<div class="section-desc ">
+    Delicious and mouth watering recipes to try at your home which are collected by the viewer's likes and reviews.
+</div>
+<div class="marTop2pr"></div>
+@{ 
+    var popularRecipe = (List<Foodzfame.Data.Entities.Dish>)ViewBag.popularPosts;
+}
+<div class="row">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in popularRecipe)
+            {
+            <div class="col-sm-4 padding-bottom3pr">
+                <div class="border-radius">
+                    @{
+                        var base64 = Convert.ToBase64String(item.Img);
+                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                        if (item.Desc != null && item.Desc.Length > 20)
+                            item.Desc = item.Desc.Substring(0, 19);
+                    }
+                    <a asp-controller="Recipe" asp-action="Recipe" asp-route-id="@item.Id"> <img src="@imgSrc" class="zoom" /></a>
+                    <div class="dishTitle">
+                        @if (item.EditorsChoice.HasValue && item.EditorsChoice.Value)
+                        {
+                        <img src="~/img/EditorsChoice.png" title="Editor's Choice" class="EditorsChoice" />
+                                }
+                                @item.DishName
+                            </div>
+        
+                            <div class="dishDesc">@item.Desc ...</div>
+                    <div class="author">by @item.AddedBy</div>
+                    <div class="cookingtime">@item.CookingTime</div>
+                    <img src="~/img/clock.png" class="cookingtimeimg" />
+
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+
+</div>

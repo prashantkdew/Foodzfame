@@ -1,0 +1,103 @@
+﻿@model Foodzfame2.Models.SearchRecipeInput
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Recipe";
+}
+
+<div class="row defaultHeader">
+    <div class="overlay">
+        <div class="container">
+            <div class="recipeTitle">
+                Find your Recipe
+            </div>
+        </div>
+    </div>
+</div>
+<div class="marTop2pr"></div>
+<div class="row">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3 box-shadow">
+                <form asp-action="Index" method="post">
+                    <div class="modal-title desc">Search</div>
+                    <div class="row ctgrysearchInput">
+                        <input type="text" asp-for="RecipeName" placeholder="Recipe you are looking for..." />
+                    </div>
+                    @{
+                        var lst = (List<SelectListItem>)ViewBag.SubCategory;
+                    }
+                    <div class="row ctgrysearchInput">
+                        <select asp-for="SubCatId" asp-items="lst">
+                            <option value="0">Category...</option>
+                        </select>
+                    </div>
+                    <div class="modal-title desc" style="font-size:large;">Cooking Time</div>
+                    <div class="row ctgrysearchInput">
+                        @{
+                            lst = (List<SelectListItem>)ViewBag.CookingTime;
+                        }
+                        <select asp-for="CookingTime" asp-items="lst">
+                            <option value=null>Cooking Time...</option>
+                        </select>
+                    </div>
+                    <div class="modal-title desc" style="font-size:large;">Difficulty</div>
+                    <div class="row ctgrysearchInput">
+                        @{
+                            lst = (List<SelectListItem>)ViewBag.Difficulty;
+                        }
+                        <select asp-for="Difficulty" asp-items="lst">
+                            <option value="0">Difficulty...</option>
+                        </select>
+                    </div>
+                    <div class="modal-title desc" style="font-size:large;">Cooking Method</div>
+                    <div class="row ctgrysearchInput">
+                        @{
+                            lst = (List<SelectListItem>)ViewBag.CookingMethod;
+                        }
+                        <select asp-for="CookingMethod" asp-items="lst">
+                            <option value="0">Cooking Method...</option>
+                        </select>
+                    </div>
+                    <div class="row ctgrysearchInput">
+                        <input type="button" value="Clear" onclick="resetSearch()" class="btn btn-warning" />
+                    </div>
+                    <div class="row ctgrysearchInput">
+                        <input type="submit" class="btn btn-success" />
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-9">
+                <div class="container">
+                    <div class="row">
+                        @foreach (var item in Model.Dishes)
+                        {
+                        <div class="col-sm-4 padding-bottom3pr">
+                            <div class="border-radius">
+                                @{
+                                    var base64 = Convert.ToBase64String(item.Img);
+                                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                    if (item.Desc!=null && item.Desc.Length > 20)
+                                        item.Desc = item.Desc.Substring(0, 19);
+                                }
+                                <a asp-action="Recipe" asp-route-id="@item.Id"><img src="@imgSrc" class="zoom" /></a>
+                                <div class="dishTitle">@item.DishName</div>
+                                <div class="dishDesc">@item.Desc ...</div>
+                            </div>
+                        </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="marTop2pr"></div>
+<partial name="_MostPopularPartial" />
+
+<div class="marTop2pr"></div>
+<partial name="_SubscribePartial" />
+
+@*<div class="marTop2pr marBottom3pr"></div>*@

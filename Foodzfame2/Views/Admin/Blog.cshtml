@@ -1,0 +1,62 @@
+﻿@model Foodzfame2.Models.AddBlog
+
+@{
+}
+
+<div class="row defaultHeader">
+    <div class="overlay">
+        <div class="container">
+            <div class="recipeTitle">
+                Add Blog Post
+            </div>
+        </div>
+    </div>
+</div>
+<div class="marTop2pr"></div>
+<div class="row"><h3>Add Blog</h3></div>
+<div class="marTop2pr"></div>
+<form asp-action="AddBlog" method="post" enctype="multipart/form-data" style="width:100%">
+    <div class="row">
+
+        <div class="col-sm-3">
+            <h6>Add Blog Title</h6>
+
+            <table>
+                <tr>
+                    <td><label asp-for="Title"></label></td>
+                    <td><input asp-for="Title" /></td>
+                </tr>
+                <tr>
+                    <td><label asp-for="Benefits">Description</label></td>
+                    <td><textarea asp-for="Benefits"></textarea></td>
+                </tr>
+                <tr>
+                    <td><label asp-for="Image">Upload</label></td>
+                    <td><input asp-for="Image" /></td>
+                </tr>
+            </table>
+        </div>
+        @for (int i = 0; i < 7; i++)
+        {
+            <div class="col-sm-3">
+                <h6>Add Step @(i+1)</h6>
+                <table>
+                    <tr>
+                        <td><label asp-for="blogPost[i].Title">Title</label></td>
+                        <td><input asp-for="blogPost[i].Title" /></td>
+                    </tr>
+                    <tr>
+                        <td><label asp-for="blogPost[i].Desc">Desc</label></td>
+                        <td><textarea asp-for="blogPost[i].Desc"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><label asp-for="blogPost[i].Image">Upload</label></td>
+                        <td><input asp-for="blogPost[i].Image" /></td>
+                    </tr>
+                </table>
+            </div>
+        }
+        <input type="submit" class="btn btn-success" />
+    </div>
+
+</form>
