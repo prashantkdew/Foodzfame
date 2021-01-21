@@ -214,3 +214,46 @@ $(".fa-chevron-circle-right").click(function () {
         OpenModal(Number(current) + 1);
     }
 });
+
+function myFunction() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName("li");
+    var maxLength = 6;
+    var counter = 0;
+    if (filter === "") {
+        for (i = 0; i < li.length; i++) {
+            li[i].style.display = "none";
+        }
+    }
+    else {
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName("a")[0];
+            txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1 && counter <= maxLength) {
+                li[i].style.display = "";
+                counter = counter + 1;
+            } else {
+                li[i].style.display = "none";
+            }
+        }
+    }
+}
+
+$(document).ready(function () {
+    $(window).scroll(function () { // check if scroll event happened
+        if ($(document).scrollTop() > 500) { // check if user scrolled more than 50 from top of the browser window
+            $("#myNav").css("background-color", "yellowgreen"); // if yes, then change the color of class "navbar-fixed-top" to white (#f8f8f8)
+        } else {
+            $("#myNav").css("background-color", "transparent"); // if not, change it back to transparent
+        }
+    });
+    $.get("/Recipe/GetDishes", function (data) {
+        for (var i = 0; i < data.length; i++) {
+            var newElement = '<li style="display:none;"><a href="/Recipe/Recipe/' + data[i].val+'">' + data[i].label+'</a></li>';
+            $('#myUL').append(newElement);
+        }
+    }); 
+});

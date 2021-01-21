@@ -128,6 +128,17 @@ namespace Foodzfame2.Controllers
                         }).Take(5).ToList();
             return Json(dish);
         }
+        [HttpGet]
+        public JsonResult GetDishes()
+        {
+            var dish = (from _dish in _dbContext.Dishes
+                        select new
+                        {
+                            label = _dish.DishName,
+                            val = _dish.Id
+                        }).ToList();
+            return Json(dish);
+        }
 
         public IActionResult Gallery(int id)
         {

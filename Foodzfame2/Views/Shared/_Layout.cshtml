@@ -14,7 +14,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="myNav">
         <div class="container">
-            <a class="navbar-brand" asp-controller="Home" asp-action="Index">Foodzfame</a>
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index" style=" top: 0%;">Foodzfame</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -36,17 +36,41 @@
                     <li class="nav-item" style="padding-right: 0%;">
                         <a class="nav-link" asp-controller="Home" asp-action="About">About</a>
                     </li>
-                    <li class="nav-item globalSearch">
+                    <li class="nav-item" style="padding-right: 0%;">
+                        <table style="float:right">
+                            <tr>
+                                <td>
+                                    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names.." title="Type in a name">
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <ul id="myUL">
+                                        @*<li><a asp-controller="Recipe" asp-action="Recipe" asp-route-id="9">Adele</a></li>
+                                        <li><a href="#">Agnes</a></li>
+                                        <li><a href="#">Billy</a></li>
+                                        <li><a href="#">Bob</a></li>
+                                        <li><a href="#">Calvin</a></li>
+                                        <li><a href="#">Christina</a></li>
+                                        <li><a href="#">Cindy</a></li>*@
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </li>
+                    @*<li class="nav-item globalSearch">
                         <form class="navbar-form" role="search">
                             <div class="form-group" id="searchForm">
-                                <input type="text" id="dishSearch" class="form-control" name="dishName"  style="float:right" />
+                                <input type="text" id="dishSearch" class="form-control" name="dishName" style="float:right" />
                                 <input type="hidden" id="hfdishSearch" name="id" />
                             </div>
                             <button type="submit" style="float:right;margin-right:-150%;" class="btn btn-default" asp-controller="Recipe" asp-action="Recipe" asp->
                                 <span class="glyphicon glyphicon-search"></span>
                             </button>
                         </form>
-                    </li>
+                    </li>*@
                 </ul>
             </div>
         </div>
@@ -64,7 +88,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script type="text/javascript">
+    @*<script type="text/javascript">
         $(function () {
             $("#dishSearch").autocomplete({
                 source: function (request, response) {
@@ -91,18 +115,7 @@
                 minLength: 1
             });
         });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $(window).scroll(function () { // check if scroll event happened
-                if ($(document).scrollTop() > 500) { // check if user scrolled more than 50 from top of the browser window
-                    $("#myNav").css("background-color", "yellowgreen"); // if yes, then change the color of class "navbar-fixed-top" to white (#f8f8f8)
-                } else {
-                    $("#myNav").css("background-color", "transparent"); // if not, change it back to transparent
-                }
-            });
-        });
-    </script>
+    </script>*@
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
