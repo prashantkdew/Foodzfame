@@ -530,3 +530,15 @@ body {
         #myUL li a:hover:not(.header) {
             text-decoration:double;
         }
+#tag {
+    border: 1px solid;
+    padding-left: 1%;
+    padding-right: 1%;
+    border-radius: 15%;
+    color: black;
+    font-style: italic;
+    font-size: small;
+}
+#tags{
+margin-top:2%;
+}

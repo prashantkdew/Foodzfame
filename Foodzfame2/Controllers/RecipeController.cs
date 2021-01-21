@@ -63,7 +63,7 @@ namespace Foodzfame2.Controllers
                                          Text = lst.Text,
                                          Value = lst.Value
                                      }).ToList();
-            if (input.CookingMethod == 0 && (input.CookingTime == null || input.CookingTime=="null") && input.Difficulty == 0 && input.RecipeName == null && input.SubCatId == 0)
+            if (input.CookingMethod == 0 && (input.CookingTime == null || input.CookingTime=="null") && input.Difficulty == 0 && input.RecipeName == null && input.SubCatId == 0 && string.IsNullOrEmpty(input.Tag))
             {
                 var searchInput = new SearchRecipeInput();
                 searchInput.Dishes = (from dishes in _dbContext.Dishes
@@ -79,6 +79,7 @@ namespace Foodzfame2.Controllers
                                    && (dishes.CookingMethod == input.CookingMethod || input.CookingMethod == 0)
                                    && (dishes.RecipeDifficulty == input.Difficulty || input.Difficulty == 0)
                                    && (dishes.CookingTime == input.CookingTime || (input.CookingTime == null || input.CookingTime == "null"))
+                                   && (dishes.Tags.Contains(input.Tag) || string.IsNullOrEmpty(input.Tag))
                                    select dishes).Take(9).ToList();
                 return View("Recipes", filtered);
             }

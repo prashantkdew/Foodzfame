@@ -31,6 +31,15 @@
                 <div class="modal-title desc">Description</div>
                 <div class="detailDesc">
                     @dish.Desc
+                    <br />
+                    <br />
+                    <div id="tags">
+                        <h6>HashTags:</h6>
+                        @foreach(var tag in dish.Tags.Split(" "))
+                        {
+                    <a asp-controller="Recipe" asp-action="Index" asp-route-Tag="@tag"><span id="tag">#@tag</span></a>
+                        }
+                    </div>
                 </div>
             </div>
             @*<div class="col-sm-4 box-shadow">

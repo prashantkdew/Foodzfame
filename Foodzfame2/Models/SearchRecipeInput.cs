@@ -14,5 +14,6 @@ namespace Foodzfame2.Models
         public int CookingMethod { get; set; }
         public int Difficulty { get; set; }
         public List<Dish> Dishes { get; set; }
+        public string Tag { get; set; }
     }
 }
