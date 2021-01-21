@@ -542,3 +542,34 @@ body {
 #tags{
 margin-top:2%;
 }
+.fa-print {
+    float: right;
+    margin-right: 2%;
+    cursor: pointer;
+}
+@media print {
+    * {
+        -webkit-print-color-adjust: exact;
+    }
+    .defaultHeader{
+        height:30%;
+    }
+    .subscription{
+        display:none;
+    }
+    #dishReview{
+        display:none;
+    }
+    .fa-print{
+        display:none !important;
+    }
+    .overlay{
+        background:none;
+    }
+    .recipeTitle{
+        padding-top:0;
+    }
+    #gotoGallery{
+        display:none;
+    }
+}

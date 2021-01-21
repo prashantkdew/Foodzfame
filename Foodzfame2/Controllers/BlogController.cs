@@ -47,6 +47,7 @@ namespace Foodzfame2.Controllers
                             .Where(x=>x.Title.Contains(search) || string.IsNullOrEmpty(search)).ToList();
             return View();
         }
+        [OutputCache(Duration = 604800)]
         public IActionResult Post(int? id)
         {
             var mostPopular = _memoryCache.Get("PopularPosts");

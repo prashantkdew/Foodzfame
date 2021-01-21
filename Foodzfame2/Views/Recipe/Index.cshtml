@@ -13,7 +13,7 @@
                 <div class="recipeTitle">
                     @dish.DishName
                 </div>
-            <a asp-action="Gallery" asp-route-id="@dish.Id">
+            <a id="gotoGallery" asp-action="Gallery" asp-route-id="@dish.Id">
                 <span style="        color: white;
         font-family: cursive;
         padding-left: 5%;
@@ -28,7 +28,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-8">
-                <div class="modal-title desc">Description</div>
+                <div class="modal-title desc">Description <i class="fa fa-print" onclick="window.print();" title="Print the Recipe" aria-hidden="true"></i></div>
                 <div class="detailDesc">
                     @dish.Desc
                     <br />
@@ -241,7 +241,7 @@
 <div class="marTop2pr"></div>
 <partial name="_SubscribePartial" />
 <div class="marTop2pr"></div>
-<div class="row">
+<div class="row" id="dishReview">
     <div class="container">
         <div class="row">
             <div class="col-sm-8">
