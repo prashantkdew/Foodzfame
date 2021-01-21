@@ -97,10 +97,11 @@
                         Ingredients
                     </td>
                     <td>
-                        <ul style="columns:3;list-style:none;">
+                        <input class="width100percent" id="IngSearch" onkeyup="searchIng()" placeholder="Search Ingredients"/>
+                        <ul id="Ings">
                             @for (int i = 0; i < Model.Ings.Count; i++)
                             {
-                                <li>
+                                <li style="display:none;">
                                     <input type="checkbox" asp-for="@Model.Ings[i].isChecked" />
                                     <label asp-for="Ings[i].isChecked">@Model.Ings[i].IngName</label>
                                     <input type="hidden" asp-for="@Model.Ings[i].Id" />

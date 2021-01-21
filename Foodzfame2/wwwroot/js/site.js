@@ -243,6 +243,26 @@ function myFunction() {
     }
 }
 
+function searchIng() {
+    var inputValue = document.getElementById("IngSearch").value.toUpperCase();
+    var li = document.getElementById("Ings").getElementsByTagName("li");
+    if (inputValue === "") {
+        for (i = 0; i < li.length; i++) {
+            li[i].style.display = "none";
+        }
+    }
+    else {
+        for (var i = 0; i < li.length; i++) {
+            if (li[i].innerText.toUpperCase().indexOf(inputValue) > -1) {
+                li[i].style.display = "";
+            }
+            else {
+                li[i].style.display = "none";
+            }
+        }
+    }
+}
+
 $(document).ready(function () {
     $(window).scroll(function () { // check if scroll event happened
         if ($(document).scrollTop() > 500) { // check if user scrolled more than 50 from top of the browser window

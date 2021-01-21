@@ -8,9 +8,11 @@ html, body {
 header{
     height:30%;
 }
-
-.width100percent{
-    width:100%;
+#Ings{
+    list-style:none;
+}
+.width100percent {
+    width: 100%;
 }
 a.navbar-brand {
   white-space: normal;
