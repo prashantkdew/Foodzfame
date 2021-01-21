@@ -170,6 +170,7 @@ function resetSearch() {
     $('#Difficulty').prop('selectedIndex', 0);
     $('#CookingMethod').prop('selectedIndex', 0);
     $('#RecipeName').val('');
+    $('#Tag').val('');
 
 }
 

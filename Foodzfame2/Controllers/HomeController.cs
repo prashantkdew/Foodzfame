@@ -66,12 +66,12 @@ namespace Foodzfame2.Controllers
             ViewBag.Blogs = _dbContext.Blogs.Take(4).ToList();
             return View();
         }
-
+        [OutputCache(Duration = 604800)]
         public IActionResult Privacy()
         {
             return View();
         }
-
+        [OutputCache(Duration = 604800)]
         public IActionResult About()
         {
             var Category = _dbContext.Categories.Include(x => x.SubCategories).ToList();

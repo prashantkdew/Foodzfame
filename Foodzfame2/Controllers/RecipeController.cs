@@ -24,7 +24,6 @@ namespace Foodzfame2.Controllers
             _memoryCache = distributedCache;
             _dbContext = context;
         }
-        [OutputCache(Duration = 604800)]
         public IActionResult Index(SearchRecipeInput input)
         {
             var mostPopular = _memoryCache.Get("PopularPosts");
@@ -85,7 +84,7 @@ namespace Foodzfame2.Controllers
                 return View("Recipes", filtered);
             }
         }
-        [OutputCache(Duration = 604800)]
+        [OutputCache(Duration = 7200)]
         public IActionResult Recipe(int? id)
         {
             ViewBag.Dish = _dbContext.Dishes

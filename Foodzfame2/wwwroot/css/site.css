@@ -322,7 +322,11 @@ body {
 .dishwrapDetail {
     font-family: 'Ubuntu';
     float: right;
-    font-weight:normal;
+    font-weight: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 130px;
 }
 .lbu {
     font-family: 'Ubuntu';

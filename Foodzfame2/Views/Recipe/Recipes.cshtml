@@ -86,7 +86,13 @@
                                         item.Desc = item.Desc.Substring(0, 19);
                                 }
                                 <a asp-action="Recipe" asp-route-id="@item.Id"><img src="@imgSrc" class="zoom" /></a>
-                                <div class="dishTitle">@item.DishName</div>
+                                <div class="dishTitle">
+                                    @if (item.EditorsChoice.HasValue && item.EditorsChoice.Value)
+                                    {
+                                        <img src="~/img/EditorsChoice.png" title="Editor's Choice" class="EditorsChoice" />
+                                    }
+                                    @item.DishName
+                                </div>
                                 <div class="dishDesc">@item.Desc ...</div>
                             </div>
                         </div>

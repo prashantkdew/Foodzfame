@@ -33,13 +33,16 @@
                     @dish.Desc
                     <br />
                     <br />
+                    @if (!string.IsNullOrEmpty(dish.Tags))
+                    {
                     <div id="tags">
                         <h6>HashTags:</h6>
-                        @foreach(var tag in dish.Tags.Split(" "))
+                        @foreach (var tag in dish.Tags.Split(" "))
                         {
                     <a asp-controller="Recipe" asp-action="Index" asp-route-Tag="@tag"><span id="tag">#@tag</span></a>
                         }
                     </div>
+                    }
                 </div>
             </div>
             @*<div class="col-sm-4 box-shadow">
@@ -211,7 +214,23 @@
                 <ul style="list-style:decimal">
                     @foreach(var item in dish.CookingInstruction.Split(new string[] { Environment.NewLine }, StringSplitOptions.None))
                     {
-                        <li style=" padding-bottom: 2%;">@item</li>
+                        if (!string.IsNullOrEmpty(item) && !string.IsNullOrWhiteSpace(item))
+                        {
+                    <li style=" padding-bottom: 2%;">
+                        @for (var i = 0; i < item.Split(":").Length; i++)
+                        {
+                            if (i == 0 || i == 2)
+                            {
+                                <b>@item.Split(":")[i] </b>
+                            }
+                            else
+                            {
+                                
+                                @string.Concat(":",item.Split(":")[i])
+                            }
+                        }
+                    </li>
+                        }
                     }
                 </ul>
             </div>
@@ -222,7 +241,7 @@
                 {
                 <div class="row padding-bottom3pr">
                     <div class="col-sm-8">@item.Ing.IngName</div>
-                    <div class="col-sm-4 float-right">@item.Ing.Qty</div>
+                    <div class="col-sm-4 float-right" style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 130px;">@item.Ing.Qty</div>
                 </div>
                 }
             </div>

@@ -36,7 +36,7 @@ namespace Foodzfame2.Controllers
             recipe.Ings = (from ing in _dbContext.Ingredients
                            select new DishIng
                            {
-                               IngName = ing.IngName,
+                               IngName = ing.IngName +ing.Qty,
                                Id=ing.Id,
                                Qty = ing.Qty
                            }).ToList();
