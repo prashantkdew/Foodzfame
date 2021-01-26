@@ -10,8 +10,6 @@ using Microsoft.Extensions.Caching.Distributed;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Mvc.Html;
 
 namespace Foodzfame2.Controllers
 {
@@ -51,18 +49,9 @@ namespace Foodzfame2.Controllers
                                        Value = recipe.CookingTime
                                    }).Distinct().ToList();
 
-            ViewBag.Difficulty = (from lst in EnumHelper.GetSelectList(typeof(DifficultyEnum))
-                                  select new SelectListItem
-                                  {
-                                      Text = lst.Text,
-                                      Value = lst.Value
-                                  }).ToList();
-            ViewBag.CookingMethod = (from lst in EnumHelper.GetSelectList(typeof(CookingMethodEnum))
-                                     select new SelectListItem
-                                     {
-                                         Text = lst.Text,
-                                         Value = lst.Value
-                                     }).ToList();
+            ViewBag.Difficulty = ((DifficultyEnum[])Enum.GetValues(typeof(DifficultyEnum))).Select(c => new SelectListItem() { Value = Convert.ToString((int)c), Text = c.ToString() }).ToList();
+
+           ViewBag.CookingMethod = ((CookingMethodEnum[])Enum.GetValues(typeof(CookingMethodEnum))).Select(c => new SelectListItem() { Value = Convert.ToString((int)c), Text = c.ToString() }).ToList();
             if (input.CookingMethod == 0 && (input.CookingTime == null || input.CookingTime=="null") && input.Difficulty == 0 && input.RecipeName == null && input.SubCatId == 0 && string.IsNullOrEmpty(input.Tag))
             {
                 var searchInput = new SearchRecipeInput();

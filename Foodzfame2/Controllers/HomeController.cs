@@ -26,7 +26,7 @@ namespace Foodzfame2.Controllers
             _memoryCache = distributedCache;
             _dbContext = context;
         }
-        [OutputCache(Duration = 604800)]
+        [OutputCache(Duration = 14400)]
         public IActionResult Index()
         {
             var mostPopular = _memoryCache.Get("PopularPosts");

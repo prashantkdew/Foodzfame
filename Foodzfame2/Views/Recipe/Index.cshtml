@@ -45,74 +45,6 @@
                     }
                 </div>
             </div>
-            @*<div class="col-sm-4 box-shadow">
-                <div class="row hbb">
-                    <div class="col-sm-1 lbu">
-                        <i class="fa fa-folder" aria-hidden="true"></i>
-                    </div>
-                    <div class="col-sm-6 lbu">
-                        <div class="dishwrapTitle">Category</div>
-                    </div>
-                    <div class="col-sm-5">
-                        <div class="dishwrapDetail">@dish.DishCategory.Category</div>
-                    </div>
-                </div>
-                <div class="row hbb">
-                    <div class="col-sm-1 lbu">
-                        <i class="fa fa-hourglass-half" aria-hidden="true"></i>
-                    </div>
-                    <div class="col-sm-6 lbu">
-                        <div class="dishwrapTitle">Total Time</div>
-                    </div>
-                    <div class="col-sm-5">
-                        <div class="dishwrapDetail">@dish.CookingTime</div>
-                    </div>
-                </div>
-                <div class="row hbb">
-                    <div class="col-sm-1 lbu">
-                        <i class="fa fa-cog" aria-hidden="true"></i>
-                    </div>
-                    <div class="col-sm-6 lbu">
-                        <div class="dishwrapTitle">Difficulty</div>
-                    </div>
-                    <div class="col-sm-5">
-                        <div class="dishwrapDetail">@((Foodzfame.Data.Enums.DifficultyEnum)dish.RecipeDifficulty)</div>
-                    </div>
-                </div>
-                <div class="row hbb">
-                    <div class="col-sm-1 lbu">
-                        <i class="fa fa-cutlery" aria-hidden="true"></i>
-                    </div>
-                    <div class="col-sm-6 lbu">
-                        <div class="dishwrapTitle">Yields</div>
-                    </div>
-                    <div class="col-sm-5">
-                        <div class="dishwrapDetail">@dish.Yields</div>
-                    </div>
-                </div>
-                <div class="row hbb">
-                    <div class="col-sm-1 lbu">
-                        <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                    </div>
-                    <div class="col-sm-6 lbu">
-                        <div class="dishwrapTitle">Likes</div>
-                    </div>
-                    <div class="col-sm-5">
-                        <div id="likes" class="dishwrapDetail">@dish.Likes</div>
-                    </div>
-                </div>
-                <div class="row hbb">
-                    <div class="col-sm-1 lbu">
-                        <i class="fa fa-star" aria-hidden="true"></i>
-                    </div>
-                    <div class="col-sm-6 lbu">
-                        <div class="dishwrapTitle">Ratings</div>
-                    </div>
-                    <div class="col-sm-5">
-                        <div class="dishwrapDetail">@string.Format("{0:F1}", dish.Reviews.Average(x => x.Rating))</div>
-                    </div>
-                </div>
-            </div>*@
             <div class="col-sm-4 box-shadow">
                 <table style="width:100%" class="dishInfo">
                     <tr class="lbu">
@@ -125,7 +57,7 @@
 
                         </td>
                         <td>
-                            <div class="dishwrapDetail">@dish.DishCategory.Category</div>
+                            <div class="dishwrapDetail" title="@dish.DishCategory.Category">@dish.DishCategory.Category</div>
 
                         </td>
                     </tr>
@@ -237,13 +169,19 @@
             <div class="col-sm-4 box-shadow">
                 <div class="desc">Ingredients</div>
                 <br />
-                @foreach (var item in dish.DishIngMaps)
-                {
-                <div class="row padding-bottom3pr">
-                    <div class="col-sm-8">@item.Ing.IngName</div>
-                    <div class="col-sm-4 float-right" style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 130px;">@item.Ing.Qty</div>
-                </div>
-                }
+                <table style="width:100%">
+                    @foreach (var item in dish.DishIngMaps)
+                    {
+                        @*<div class="row padding-bottom3pr">
+                            <div class="col-sm-8">@item.Ing.IngName</div>
+                            <div title="@item.Ing.Qty" class="col-sm-4 float-right" style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 130px;">@item.Ing.Qty</div>
+                        </div>*@
+                        <tr>
+                            <td class="padding-bottom3pr">@item.Ing.IngName</td>
+                            <td class="padding-bottom3pr float-right" style=" white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 130px;">@item.Ing.Qty</td>
+                        </tr>
+                    }
+                </table>
             </div>
         </div>
     </div>

@@ -136,6 +136,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    min-height: 350px;
 }
 .row{
     margin-left:0;
@@ -247,6 +248,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    min-height: 350px;
 }
 .author {
     color: gray;
@@ -572,8 +574,13 @@ margin-top:2%;
     .overlay{
         background:none;
     }
-    .recipeTitle{
-        padding-top:0;
+    .recipeTitle {
+        padding-top: 0;
+        background: yellowgreen;
+        position: absolute;
+        width: 150%;
+        margin-left: -9%;
+        padding-left: 3%;
     }
     #gotoGallery{
         display:none;
