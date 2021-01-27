@@ -10,7 +10,7 @@ namespace Foodzfame.Data.Enums
     public enum DifficultyEnum
     {
         Low=1,
-        Midium,
+        Medium,
         High
     }
     public enum CookingMethodEnum
@@ -23,6 +23,7 @@ namespace Foodzfame.Data.Enums
         Saute,
         Steamed,
         Baked,
+        PanCooked,
         Other
     }
 }
