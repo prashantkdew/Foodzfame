@@ -196,6 +196,9 @@ body {
     font-family: 'Ubuntu', sans-serif;
     font-size: larger;
     font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .dishDesc {
     padding: 3%;
