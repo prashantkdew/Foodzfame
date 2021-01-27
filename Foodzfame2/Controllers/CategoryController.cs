@@ -27,7 +27,7 @@ namespace Foodzfame2.Controllers
             var popularPosts = new List<Dish>();
             if (mostPopular == null)
             {
-                popularPosts = _dbContext.Dishes.AsEnumerable().OrderByDescending(n => n.Likes).Take(3).ToList();
+                popularPosts = _dbContext.Dishes.AsEnumerable().OrderByDescending(n => n.Likes).Take(12).ToList();
                 var cacheOptions = new DistributedCacheEntryOptions
                 {
                     AbsoluteExpiration = DateTime.Now.AddDays(7)

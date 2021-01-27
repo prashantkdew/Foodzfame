@@ -34,7 +34,7 @@ namespace Foodzfame2.Controllers
             var popularPosts = new List<Dish>();
             if (mostPopular == null)
             {
-                popularPosts = _dbContext.Dishes.AsEnumerable().OrderByDescending(n => n.Likes).Take(3).ToList();
+                popularPosts = _dbContext.Dishes.AsEnumerable().OrderByDescending(n => n.Likes).Take(6).ToList();
                 var cacheOptions = new DistributedCacheEntryOptions
                 {
                     AbsoluteExpiration = DateTime.Now.AddDays(7)
@@ -47,14 +47,13 @@ namespace Foodzfame2.Controllers
                             .Where(x=>x.Title.Contains(search) || string.IsNullOrEmpty(search)).ToList();
             return View();
         }
-        [OutputCache(Duration = 604800)]
         public IActionResult Post(int? id)
         {
             var mostPopular = _memoryCache.Get("PopularPosts");
             var popularPosts = new List<Dish>();
             if (mostPopular == null)
             {
-                popularPosts = _dbContext.Dishes.AsEnumerable().OrderByDescending(n => n.Likes).Take(3).ToList();
+                popularPosts = _dbContext.Dishes.AsEnumerable().OrderByDescending(n => n.Likes).Take(12).ToList();
                 var cacheOptions = new DistributedCacheEntryOptions
                 {
                     AbsoluteExpiration = DateTime.Now.AddDays(7)

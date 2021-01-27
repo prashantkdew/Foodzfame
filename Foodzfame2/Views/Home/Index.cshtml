@@ -101,7 +101,7 @@
                             if (item.Benefits != null && item.Benefits.Length > 20)
                                 item.Benefits = item.Benefits.Substring(0, 19);
                         
-                        <div class="col-sm-6 padding-bottom3pr">
+                        <div class="col-sm-4 padding-bottom3pr">
                             <div class="border-radius">
                                 <a asp-controller="Blog" asp-action="Post" asp-route-id="@item.Id"> <img src="@imgSrc" class="zoom" /></a>
                                 <div class="dishTitle">@item.Title</div>

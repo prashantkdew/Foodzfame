@@ -33,7 +33,7 @@ namespace Foodzfame2.Controllers
             var popularPosts = new List<Dish>();
             if (mostPopular==null)
             {
-                popularPosts = _dbContext.Dishes.AsEnumerable().OrderByDescending(n => n.Likes).Take(3).ToList();
+                popularPosts = _dbContext.Dishes.AsEnumerable().OrderByDescending(n => n.Likes).Take(12).ToList();
                 var cacheOptions = new DistributedCacheEntryOptions
                 {
                     AbsoluteExpiration = DateTime.Now.AddDays(7)
@@ -41,7 +41,7 @@ namespace Foodzfame2.Controllers
                 _memoryCache.Set("PopularPosts",Utils.ObjectToByteArray(popularPosts), cacheOptions);              
             }
             ViewBag.popularPosts = (List<Dish>)Utils.ByteArrayToObject(_memoryCache.Get("PopularPosts"));
-            ViewBag.recipeByCategory = _dbContext.Dishes.Include(x=>x.DishCategory).AsEnumerable().OrderByDescending(n => Guid.NewGuid()).Take(8).ToList();
+            ViewBag.recipeByCategory = _dbContext.Dishes.Include(x=>x.DishCategory).AsEnumerable().OrderByDescending(n => Guid.NewGuid()).Take(12).ToList();
             var Category = _dbContext.Categories.Include(x => x.SubCategories).ToList();
             var Counters = new Counters();
             Counters.counts = new List<CategoryRecipeCounts>();
