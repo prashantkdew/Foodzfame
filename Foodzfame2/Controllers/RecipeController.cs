@@ -149,8 +149,16 @@ namespace Foodzfame2.Controllers
                 _memoryCache.Set("PopularPosts", Utils.ObjectToByteArray(popularPosts), cacheOptions);
             }
             ViewBag.popularPosts = (List<Dish>)Utils.ByteArrayToObject(_memoryCache.Get("PopularPosts"));
-            ViewBag.Gallery = (from recipe in _dbContext.Dishes.Where(x => x.Id == id)
-                               join gallery in _dbContext.Galleries.Where(x => x.DishId == id)
+            var dish = _dbContext.Dishes.Where(x => x.Id == id);
+            var galry = new List<GalleryModel>();
+            galry.Add(new GalleryModel() { 
+                    DishId=dish.FirstOrDefault().Id,
+                    recipeName=dish.FirstOrDefault().DishName,
+                    Img= dish.FirstOrDefault().Img,
+                    Title=dish.FirstOrDefault().DishName
+            });
+            var galries = (from recipe in dish
+                           join gallery in _dbContext.Galleries.Where(x => x.DishId == id)
                                on recipe.Id equals gallery.DishId
                              select new GalleryModel
                              {
@@ -159,7 +167,9 @@ namespace Foodzfame2.Controllers
                                  Img = gallery.Img,
                                  Title = gallery.Title
                              }).Distinct().ToList();
-
+            if (galries != null && galries.Count > 0)
+                galry.AddRange(galries);
+            ViewBag.Gallery = galry;
             return View();
         }
     }
