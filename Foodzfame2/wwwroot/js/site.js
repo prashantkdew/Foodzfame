@@ -62,14 +62,14 @@ $('#reviewta').on('keyup', function (event) {
 
 });
 
-function paginate(element) {
+function paginate(element,pagesize) {
     if (element.innerText==='Next') {
         if (pageNum != $('#hdnTotalPages').val()) {
             pageNum = pageNum + 1;
             var testimonials = $('.page-link');
             testimonials.removeClass('active');
-            var lastRecord = pageNum * 6;
-            var intialRecord = lastRecord - 5;
+            var lastRecord = pageNum * pagesize;
+            var intialRecord = lastRecord - pagesize+1;
             for (var i = 1; i <= $('#hdnTotalCount').val(); i++) {
                 $('#page_' + i).css('display', 'none');
                 if (i >= intialRecord && i <= lastRecord) {
@@ -92,8 +92,8 @@ function paginate(element) {
             pageNum = pageNum - 1;
             var testimonials = $('.page-link');
             testimonials.removeClass('active');
-            var lastRecord = pageNum * 6;
-            var intialRecord = lastRecord - 5;
+            var lastRecord = pageNum * pagesize;
+            var intialRecord = lastRecord - pagesize+1;
             for (var i = 1; i <= $('#hdnTotalCount').val(); i++) {
                 $('#page_' + i).css('display', 'none');
                 if (i >= intialRecord && i <= lastRecord) {
@@ -120,14 +120,24 @@ function paginate(element) {
             }
 
         }
-        var lastRecord = element.innerText * 6;
-        var intialRecord = lastRecord - 5;
+        var lastRecord = element.innerText * pagesize;
+        var intialRecord = lastRecord - pagesize+1;
         for (var i = 1; i <= $('#hdnTotalCount').val(); i++) {
             $('#page_' + i).css('display', 'none');
             if (i >= intialRecord && i <= lastRecord) {
                 $('#page_' + i).css('display', '');
             }
         }
+    }
+    if (pageNum > 1 && pageNum < $('.page-link').length - 2) {
+        var testimonials = $('.page-link');
+        for (var i = 1; i <= $('.page-link').length - 2;i++) {
+            testimonials[i].style.display = 'none'
+        }
+        testimonials[pageNum].style.display = '';
+        testimonials[pageNum + 1].style.display = '';
+        testimonials[pageNum - 1].style.display = '';
+
     }
 }
 

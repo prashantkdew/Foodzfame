@@ -4,8 +4,13 @@
 *@
 @{
     ViewData["Title"] = "Recipe";
+    int totalPages = Model.Dishes.Count / 9;
+    int counter = 0;
+    if (Model.Dishes.Count % 9 != 0)
+        totalPages++;
 }
-
+<input type="hidden" id="hdnTotalCount" value="@Model.Dishes.Count" />
+<input type="hidden" id="hdnTotalPages" value="@totalPages" />
 <div class="row defaultHeader">
     <div class="overlay">
         <div class="container">
@@ -75,28 +80,84 @@
             <div class="col-sm-9">
                 <div class="container">
                     <div class="row">
-                        @foreach (var item in Model.Dishes)
-                        {
-                        <div class="col-sm-4 padding-bottom3pr">
-                            <div class="border-radius">
-                                @{
-                                    var base64 = Convert.ToBase64String(item.Img);
-                                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                                    if (item.Desc!=null && item.Desc.Length > 20)
-                                        item.Desc = item.Desc.Substring(0, 19);
-                                }
-                                <a asp-action="Recipe" asp-route-id="@item.Id"><img src="@imgSrc" class="zoom" /></a>
-                                <div class="dishTitle">
-                                    @if (item.EditorsChoice.HasValue && item.EditorsChoice.Value)
+                        <div class="row">
+                            <nav style="padding-left: 1%;" aria-label="Page navigation">
+                                <ul class="pagination">
+                                    <li class="page-item"><a class="page-link" onclick="paginate(this,9)">Previous</a></li>
+                                    @for (int i = 1; i <= totalPages; i++)
                                     {
-                                        <img src="~/img/EditorsChoice.png" title="Editor's Choice" class="EditorsChoice" />
+                                        if (i == 1)
+                                        {
+                                            <li class="page-item"><a class="page-link active" onclick="paginate(this,9)">@i</a></li>
+
+                                        }
+                                        else if (i > 3)
+                                        {
+                                            <li class="page-item"><a  style="display:none;" class="page-link" onclick="paginate(this,9)">@i</a></li>
+
+                                        }
+                                        else
+                                        {
+                                            <li class="page-item"><a class="page-link" onclick="paginate(this,9)">@i</a></li>
+
+                                        }
                                     }
-                                    @item.DishName
-                                </div>
-                                <div class="dishDesc">@item.Desc ...</div>
-                            </div>
+                                    <li class="page-item"><a class="page-link" onclick="paginate(this,9)">Next</a></li>
+                                </ul>
+                            </nav>
                         </div>
-                        }
+                        <div class="row">
+
+                            @foreach (var item in Model.Dishes)
+                            {
+                                counter++;
+                                if (counter <= 9)
+                                {
+                                    <div id="page_@counter" class="col-sm-4 padding-bottom3pr">
+                                        <div class="border-radius">
+                                            @{
+                                                var base64 = Convert.ToBase64String(item.Img);
+                                                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                                if (item.Desc != null && item.Desc.Length > 20)
+                                                    item.Desc = item.Desc.Substring(0, 19);
+                                            }
+                                            <a asp-action="Recipe" asp-route-id="@item.Id"><img src="@imgSrc" class="zoom" /></a>
+                                            <div class="dishTitle">
+                                                @if (item.EditorsChoice.HasValue && item.EditorsChoice.Value)
+                                                {
+                                                    <img src="~/img/EditorsChoice.png" title="Editor's Choice" class="EditorsChoice" />
+                                                }
+                                                @item.DishName
+                                            </div>
+                                            <div class="dishDesc">@item.Desc ...</div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-sm-4 padding-bottom3pr" id="page_@counter" style="display:none;">
+                                        <div class="border-radius">
+                                            @{
+                                                var base64 = Convert.ToBase64String(item.Img);
+                                                var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                                if (item.Desc != null && item.Desc.Length > 20)
+                                                    item.Desc = item.Desc.Substring(0, 19);
+                                            }
+                                            <a asp-action="Recipe" asp-route-id="@item.Id"><img src="@imgSrc" class="zoom" /></a>
+                                            <div class="dishTitle">
+                                                @if (item.EditorsChoice.HasValue && item.EditorsChoice.Value)
+                                                {
+                                                    <img src="~/img/EditorsChoice.png" title="Editor's Choice" class="EditorsChoice" />
+                                                }
+                                                @item.DishName
+                                            </div>
+                                            <div class="dishDesc">@item.Desc ...</div>
+                                        </div>
+                                    </div>
+                                }
+
+                            }
+                        </div>
                     </div>
                 </div>
             </div>

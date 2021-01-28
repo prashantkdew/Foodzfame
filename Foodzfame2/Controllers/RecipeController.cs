@@ -56,7 +56,7 @@ namespace Foodzfame2.Controllers
             {
                 var searchInput = new SearchRecipeInput();
                 searchInput.Dishes = (from dishes in _dbContext.Dishes
-                                      select dishes).Take(9).ToList();
+                                      select dishes).ToList();
                 return View("Recipes", searchInput); 
             }
             else
@@ -69,7 +69,7 @@ namespace Foodzfame2.Controllers
                                    && (dishes.RecipeDifficulty == input.Difficulty || input.Difficulty == 0)
                                    && (dishes.CookingTime == input.CookingTime || (input.CookingTime == null || input.CookingTime == "null"))
                                    && (dishes.Tags.Contains(input.Tag) || string.IsNullOrEmpty(input.Tag))
-                                   select dishes).Take(9).ToList();
+                                   select dishes).ToList();
                 return View("Recipes", filtered);
             }
         }
