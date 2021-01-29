@@ -63,7 +63,7 @@ $('#reviewta').on('keyup', function (event) {
 });
 
 function paginate(element,pagesize) {
-    if (element.innerText==='Next') {
+    if (element.innerText === 'Next' || element.innerText === '>') {
         if (pageNum != $('#hdnTotalPages').val()) {
             pageNum = pageNum + 1;
             var testimonials = $('.page-link');
@@ -86,7 +86,7 @@ function paginate(element,pagesize) {
 
         }
     }
-    else if (element.innerText === 'Previous')
+    else if (element.innerText === 'Previous' || element.innerText === '<')
     {
         if (pageNum != 1) {
             pageNum = pageNum - 1;

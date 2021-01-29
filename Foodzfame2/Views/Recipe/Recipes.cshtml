@@ -83,7 +83,7 @@
                         <div class="row">
                             <nav style="padding-left: 1%;" aria-label="Page navigation">
                                 <ul class="pagination">
-                                    <li class="page-item"><a class="page-link" onclick="paginate(this,9)">Previous</a></li>
+                                    <li title="Previous" class="page-item"><a class="page-link" onclick="paginate(this,9)">Previous</a></li>
                                     @for (int i = 1; i <= totalPages; i++)
                                     {
                                         if (i == 1)
@@ -102,7 +102,7 @@
 
                                         }
                                     }
-                                    <li class="page-item"><a class="page-link" onclick="paginate(this,9)">Next</a></li>
+                                    <li class="page-item" title="Next"><a class="page-link" onclick="paginate(this,9)">Next</a></li>
                                 </ul>
                             </nav>
                         </div>
