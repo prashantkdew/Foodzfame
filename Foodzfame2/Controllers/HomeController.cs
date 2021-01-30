@@ -63,7 +63,7 @@ namespace Foodzfame2.Controllers
                 });
             }
             ViewBag.Category = Counters;
-            ViewBag.Blogs = _dbContext.Blogs.Take(4).ToList();
+            ViewBag.Blogs = _dbContext.Blogs.Take(6).ToList();
             return View();
         }
         [OutputCache(Duration = 604800)]

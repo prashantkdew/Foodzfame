@@ -2,6 +2,7 @@
 using Foodzfame.Data.FoodzfameContext;
 using Foodzfame.Utility;
 using Foodzfame2.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Foodzfame2.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         FoodzfameContext _dbContext;

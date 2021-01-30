@@ -62,18 +62,26 @@
             <div class="col-sm-9">
                 <div class="container">
                     <div class="row">
-                        <ul class="breakcrum">
-                            <li><a asp-action="Index"><i class="fa fa-home" aria-hidden="true"></i></a></li>
-                            @if (isCat)
-                            {
-                                <li><a href="#">@ViewBag.CategoryName</a></li>
-                            }
+                        <div class="col-sm-10">
+                            <ul class="breakcrum">
+                                <li><a asp-action="Index"><i class="fa fa-home" aria-hidden="true"></i></a></li>
+                                @if (isCat)
+                                {
+                                    <li><a href="#">@ViewBag.CategoryName</a></li>
+                                }
+                                @if (isSubCat)
+                                {
+                                    <li><a asp-action="Index" asp-route-Category="@input.Category">@ViewBag.CategoryName</a></li>
+                                    <li><a href="#">@ViewBag.SubCategoryName</a></li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="col-sm-2">
                             @if (isSubCat)
                             {
-                                <li><a asp-action="Index" asp-route-Category="@input.Category">@ViewBag.CategoryName</a></li>
-                                <li><a href="#">@ViewBag.SubCategoryName</a></li>
+                                <a style="color: yellowgreen; font-size: 15px; font-family: 'Ubuntu'; font-weight: bold;" asp-controller="Recipe" asp-action="Index" asp-route-SubCatId="@Convert.ToInt32(ViewBag.SubCatId)">(View All)</a>
                             }
-                        </ul>
+                        </div>
                     </div>
                     <div class="row">
                         @foreach (var item in input.Dishes)

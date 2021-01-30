@@ -57,6 +57,7 @@ namespace Foodzfame2.Controllers
                 ViewBag.CategoryName = _dbContext.Categories.FirstOrDefault(x => x.Id == input.Category).Category1;
                 input.SubCategories = _dbContext.SubCategories.Where(x => x.CategoryId == input.Category).ToList();
                 ViewBag.SubCategoryName = _dbContext.SubCategories.FirstOrDefault(x => x.Id == input.SubCategory).Category;
+                ViewBag.SubCatId = _dbContext.SubCategories.FirstOrDefault(x => x.Id == input.SubCategory).Id;
                 input.Dishes = _dbContext.Dishes.Where(x => x.DishCategoryId == input.SubCategory).Take(9).ToList();
             }
             ViewBag.CategoryWise = input;

@@ -1,0 +1,24 @@
+﻿@model Foodzfame2.Models.LoginUser
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Login";
+}
+<div class="row defaultHeader">
+    <div class="overlay">
+        <div class="container">
+            <div class="recipeTitle">
+                Admin Login
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <form method="post" asp-action="Login" class="login">
+        <input asp-for="UserName" type="text" placeholder="Username">
+        <input asp-for="Password" type="password" placeholder="Password">
+        <button type="submit">Login</button>
+    </form>
+</div>
+
