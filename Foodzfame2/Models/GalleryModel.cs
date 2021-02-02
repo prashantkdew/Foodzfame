@@ -11,5 +11,6 @@ namespace Foodzfame2.Models
     {
         public IFormFile Image { get; set; }
         public string recipeName { get; set; }
+        public string Tags { get; set; }
     }
 }

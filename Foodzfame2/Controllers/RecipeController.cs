@@ -179,11 +179,17 @@ namespace Foodzfame2.Controllers
                                  DishId = recipe.Id,
                                  recipeName = recipe.DishName,
                                  Img = gallery.Img,
-                                 Title = gallery.Title
+                                 Title = gallery.Title,
+                                 Tags=recipe.Tags
                              }).Distinct().ToList();
             if (galries != null && galries.Count > 0)
                 galry.AddRange(galries);
             ViewBag.Gallery = galry;
+            List<string> tags = new List<string>();
+            tags.AddRange(galries.Select(s=>s.recipeName));
+            tags.AddRange(galries.Select(s=>s.Title));
+            tags.AddRange(galries.Select(s => s.Tags));
+            ViewBag.MetaTag = Utils.RecipeMetaTags(tags.Distinct().ToArray(), "test");
             return View();
         }
     }

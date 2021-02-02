@@ -62,7 +62,7 @@ namespace Foodzfame.Utility
 
             System.Text.StringBuilder strMetaTag = new System.Text.StringBuilder();
 
-            strMetaTag.AppendFormat(@"<meta content='{0}' name='Keywords'/>", string.Join(" ", keywords)); strMetaTag.AppendFormat(@"<meta content='{0}' name='Descption'/>", description); return strMetaTag.ToString();
+            strMetaTag.AppendFormat(@"<meta name='Keywords' content='{0}' />", string.Join(" ", keywords)); strMetaTag.AppendFormat(@"<meta name='Descption' content='{0}' />", description); return strMetaTag.ToString();
 
         }
     }

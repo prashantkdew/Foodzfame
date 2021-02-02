@@ -64,16 +64,28 @@ namespace Foodzfame2.Controllers
             }
             ViewBag.Category = Counters;
             ViewBag.Blogs = _dbContext.Blogs.Take(6).ToList();
+            List<string> tags = new List<string>();
+            tags.AddRange(Category.Select(s=>s.Category1));
+            tags.AddRange(((List<Dish>)ViewBag.popularPosts).Select(s=>s.DishName));
+            tags.AddRange(((List<Dish>)ViewBag.popularPosts).Select(s=>s.Tags));
+            tags.Add("foodblog food blog recipe recipes spicy tangy indianfood indianrecipe indiancuisine foodcategory category Every day recipe fastfood");
+            ViewBag.MetaTag = Utils.RecipeMetaTags(tags.Distinct().ToArray(), "A Food blog, Foodsfame is a food blog containing recipes, tips, tricks for cooking and also blogs (which contains health benefits, Nutrional facts, diabetic information of foods etc.)");
             return View();
         }
         [OutputCache(Duration = 604800)]
         public IActionResult Privacy()
         {
+            List<string> tags = new List<string>();
+            tags.Add("foodblog foodblog foodzfame privacy policy");
+            ViewBag.MetaTag = Utils.RecipeMetaTags(tags.Distinct().ToArray(), "A Food blog, Foodsfame is a food blog containing recipes, tips, tricks for cooking and also blogs (which contains health benefits, Nutrional facts, diabetic information of foods etc.)");
             return View();
         }
         [OutputCache(Duration = 604800)]
         public IActionResult About()
         {
+            List<string> tags = new List<string>();
+            tags.Add("foodblog foodzfame about aboutus");
+            ViewBag.MetaTag = Utils.RecipeMetaTags(tags.Distinct().ToArray(), "A Food blog, Foodsfame is a food blog containing recipes, tips, tricks for cooking and also blogs (which contains health benefits, Nutrional facts, diabetic information of foods etc.)");
             var Category = _dbContext.Categories.Include(x => x.SubCategories).ToList();
             var Counters = new Counters();
             Counters.counts = new List<CategoryRecipeCounts>();
