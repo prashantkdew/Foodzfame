@@ -57,5 +57,13 @@ namespace Foodzfame.Utility
                 return target.ToArray();
             }
         }
+        public static string RecipeMetaTags(string[] keywords, string description)
+        {
+
+            System.Text.StringBuilder strMetaTag = new System.Text.StringBuilder();
+
+            strMetaTag.AppendFormat(@"<meta content='{0}' name='Keywords'/>", string.Join(" ", keywords)); strMetaTag.AppendFormat(@"<meta content='{0}' name='Descption'/>", description); return strMetaTag.ToString();
+
+        }
     }
 }

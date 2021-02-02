@@ -22,6 +22,7 @@ namespace Foodzfame2.Controllers
             _memoryCache = distributedCache;
             _dbContext = context;
         }
+
         public IActionResult Index(SearchRecipeInput input)
         {
             var mostPopular = _memoryCache.Get("PopularPosts");
@@ -57,6 +58,10 @@ namespace Foodzfame2.Controllers
                 var searchInput = new SearchRecipeInput();
                 searchInput.Dishes = (from dishes in _dbContext.Dishes
                                       select dishes).ToList();
+                List<string> tags = new List<string>();
+                tags.AddRange(searchInput.Dishes.Select(s=>s.DishName));
+                tags.AddRange(searchInput.Dishes.Select(s=>s.Tags));
+                ViewBag.MetaTag = Utils.RecipeMetaTags(tags.Distinct().ToArray(),"test");
                 return View("Recipes", searchInput); 
             }
             else
@@ -70,18 +75,27 @@ namespace Foodzfame2.Controllers
                                    && (dishes.CookingTime == input.CookingTime || (input.CookingTime == null || input.CookingTime == "null"))
                                    && (dishes.Tags.Contains(input.Tag) || string.IsNullOrEmpty(input.Tag))
                                    select dishes).ToList();
+                List<string> tags = new List<string>();
+                tags.AddRange(filtered.Dishes.Select(s => s.DishName));
+                tags.AddRange(filtered.Dishes.Select(s => s.Tags));
+                ViewBag.MetaTag = Utils.RecipeMetaTags(tags.Distinct().ToArray(), "test");
                 return View("Recipes", filtered);
             }
         }
         [OutputCache(Duration = 7200)]
         public IActionResult Recipe(int? id)
         {
-            ViewBag.Dish = _dbContext.Dishes
+            var _dish= _dbContext.Dishes
                 .Include(x => x.DishCategory)
                 .Include(x => x.Reviews)
                 .Include(x => x.DishIngMaps)
                 .ThenInclude(y => y.Ing)
                 .FirstOrDefault(z => z.Id == id);
+            ViewBag.Dish = _dish;
+            List<string> tags = new List<string>();
+            tags.Add(_dish.DishName);
+            tags.Add(_dish.Tags);
+            ViewBag.MetaTag = Utils.RecipeMetaTags(tags.Distinct().ToArray(), "test");
             return View("Index");
         }
         public IActionResult AddLike(int id)
