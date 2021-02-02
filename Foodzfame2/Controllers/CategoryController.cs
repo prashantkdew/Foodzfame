@@ -60,6 +60,14 @@ namespace Foodzfame2.Controllers
                 ViewBag.SubCatId = _dbContext.SubCategories.FirstOrDefault(x => x.Id == input.SubCategory).Id;
                 input.Dishes = _dbContext.Dishes.Where(x => x.DishCategoryId == input.SubCategory).Take(9).ToList();
             }
+            List<string> tags = new List<string>();
+            if (input.Categories != null && input.Categories.Count > 0)
+                tags.AddRange(input.Categories.Select(s=>s.Category1));
+            tags.AddRange(input.Dishes.Select(s=>s.DishName));
+            tags.AddRange(input.Dishes.Select(s=>s.Tags));
+            if(input.SubCategories!=null && input.SubCategories.Count>0)
+            tags.AddRange(input.SubCategories.Select(s=>s.Category));
+            ViewBag.MetaTag = Utils.RecipeMetaTags(tags.Distinct().ToArray(), "Foodzfame, A food blog. Categorizing foods based on the type of dish. Having same cooking style or may be cuisine and may help you decide what could be your today's Menu.");
             ViewBag.CategoryWise = input;
             return View();
         }

@@ -61,7 +61,7 @@ namespace Foodzfame2.Controllers
                 List<string> tags = new List<string>();
                 tags.AddRange(searchInput.Dishes.Select(s=>s.DishName));
                 tags.AddRange(searchInput.Dishes.Select(s=>s.Tags));
-                ViewBag.MetaTag = Utils.RecipeMetaTags(tags.Distinct().ToArray(),"test");
+                ViewBag.MetaTag = Utils.RecipeMetaTags(tags.Distinct().ToArray(), "Search recipes with different filters, helps in finding the right recipe for you. Be it category wise, hashtags, difficulty or preparation time.");
                 return View("Recipes", searchInput); 
             }
             else
@@ -78,7 +78,7 @@ namespace Foodzfame2.Controllers
                 List<string> tags = new List<string>();
                 tags.AddRange(filtered.Dishes.Select(s => s.DishName));
                 tags.AddRange(filtered.Dishes.Select(s => s.Tags));
-                ViewBag.MetaTag = Utils.RecipeMetaTags(tags.Distinct().ToArray(), "test");
+                ViewBag.MetaTag = Utils.RecipeMetaTags(tags.Distinct().ToArray(), "Search recipes with different filters, helps in finding the right recipe for you. Be it category wise, hashtags, difficulty or preparation time.");
                 return View("Recipes", filtered);
             }
         }
@@ -94,8 +94,9 @@ namespace Foodzfame2.Controllers
             ViewBag.Dish = _dish;
             List<string> tags = new List<string>();
             tags.Add(_dish.DishName);
+            tags.Add(string.Join(" ",_dish.DishCategory.Category,_dish.CookingMethod,_dish.CookingTime));
             tags.Add(_dish.Tags);
-            ViewBag.MetaTag = Utils.RecipeMetaTags(tags.Distinct().ToArray(), "test");
+            ViewBag.MetaTag = Utils.RecipeMetaTags(tags.Distinct().ToArray(), _dish.Desc);
             return View("Index");
         }
         public IActionResult AddLike(int id)
@@ -189,7 +190,7 @@ namespace Foodzfame2.Controllers
             tags.AddRange(galries.Select(s=>s.recipeName));
             tags.AddRange(galries.Select(s=>s.Title));
             tags.AddRange(galries.Select(s => s.Tags));
-            ViewBag.MetaTag = Utils.RecipeMetaTags(tags.Distinct().ToArray(), "test");
+            ViewBag.MetaTag = Utils.RecipeMetaTags(tags.Distinct().ToArray(), dish.FirstOrDefault().DishName+" Image gallery");
             return View();
         }
     }

@@ -45,6 +45,11 @@ namespace Foodzfame2.Controllers
 
             ViewBag.Blogs = _dbContext.Blogs.Include(x => x.BlogPosts)
                             .Where(x=>x.Title.Contains(search) || string.IsNullOrEmpty(search)).ToList();
+            List<string> tags = new List<string>();
+            tags.AddRange(((List<Dish>)ViewBag.popularPosts).Select(s=>s.DishName));
+            tags.AddRange(((List<Dish>)ViewBag.popularPosts).Select(s=>s.Tags));
+            tags.AddRange(((List<Blog>)ViewBag.Blogs).Select(s=>s.Title));
+            ViewBag.MetaTag = Utils.RecipeMetaTags(tags.Distinct().ToArray(), "Our food blog is curated with best tips and tricks and food hacks to enjoy your meal and stay healthy. You may also find allergic information about foods.");
             return View();
         }
         public IActionResult Post(int? id)
@@ -64,6 +69,9 @@ namespace Foodzfame2.Controllers
             if (id == null || id == 0)
                 RedirectToAction("Index");
             ViewBag.Post = _dbContext.Blogs.Include(x=>x.BlogPosts).FirstOrDefault(x => x.Id == id.Value);
+            List<string> tags = new List<string>();
+            tags.Add(((Blog)ViewBag.Post).Title);
+            ViewBag.MetaTag = Utils.RecipeMetaTags(tags.Distinct().ToArray(), "Our food blog is curated with best tips and tricks and food hacks to enjoy your meal and stay healthy. You may also find allergic information about foods.");
             return View();
         }
     }
