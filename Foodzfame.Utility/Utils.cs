@@ -57,12 +57,19 @@ namespace Foodzfame.Utility
                 return target.ToArray();
             }
         }
-        public static string RecipeMetaTags(string[] keywords, string description)
+        public static string RecipeMetaTags(string[] keywords, string description, List<KeyValuePair<string,string>> additionalAttr=null)
         {
 
             System.Text.StringBuilder strMetaTag = new System.Text.StringBuilder();
-
-            strMetaTag.AppendFormat(@"<meta name='Keywords' content='{0}' />", string.Join(" ", keywords)); strMetaTag.AppendFormat(@"<meta name='Descption' content='{0}' />", description); return strMetaTag.ToString();
+            if (additionalAttr != null)
+            {
+                foreach (var item in additionalAttr)
+                {
+                    strMetaTag.AppendFormat(@"<meta name='og:{0}' content='{1}' />",item.Key,item.Value);
+                }
+            }
+            strMetaTag.AppendFormat(@"<meta name='Keywords' content='{0}' />", string.Join(" ", keywords)); strMetaTag.AppendFormat(@"<meta name='Descption' content='{0}' />", description); 
+            return strMetaTag.ToString();
 
         }
     }

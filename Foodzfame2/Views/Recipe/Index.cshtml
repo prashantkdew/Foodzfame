@@ -36,15 +36,29 @@
                     <br />
                     @if (!string.IsNullOrEmpty(dish.Tags))
                     {
-                    <div id="tags">
-                        <h6>HashTags:</h6>
-                        @foreach (var tag in dish.Tags.Split(" "))
-                        {
-                    <a asp-controller="Recipe" asp-action="Index" asp-route-Tag="@tag"><span id="tag">#@tag</span></a>
-                        }
-                    </div>
+                        <div id="tags">
+                            <h6>HashTags:</h6>
+                            @foreach (var tag in dish.Tags.Split(" "))
+                            {
+                                <a asp-controller="Recipe" asp-action="Index" asp-route-Tag="@tag"><span id="tag">#@tag</span></a>
+                            }
+                        </div>
                     }
                 </div>
+                @*<div id="google_translate_element"></div>
+
+                <script type="text/javascript">
+                    function googleTranslateElementInit() {
+                        new google.translate.TranslateElement(
+                            { pageLanguage: 'en' },
+                            'google_translate_element'
+                        );
+                    }
+                </script>
+
+                <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?
+		cb=googleTranslateElementInit">
+                </script>*@
             </div>
             <div class="col-sm-4 box-shadow">
                 <table style="width:100%" class="dishInfo">

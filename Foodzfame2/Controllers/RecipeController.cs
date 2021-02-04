@@ -96,7 +96,17 @@ namespace Foodzfame2.Controllers
             tags.Add(_dish.DishName);
             tags.Add(string.Join(" ",_dish.DishCategory.Category,_dish.CookingMethod,_dish.CookingTime));
             tags.Add(_dish.Tags);
-            ViewBag.MetaTag = Utils.RecipeMetaTags(tags.Distinct().ToArray(), _dish.Desc);
+            List<KeyValuePair<string, string>> attr = new List<KeyValuePair<string, string>>();
+            attr.Add(new KeyValuePair<string, string>("title",_dish.DishName));
+            attr.Add(new KeyValuePair<string, string>("url","https://foodzfame.com/Recipe/Recipe/"+id.ToString()));
+            var base64 = Convert.ToBase64String(_dish.Img);
+            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+            attr.Add(new KeyValuePair<string, string>("image", imgSrc));
+            attr.Add(new KeyValuePair<string, string>("type", "article"));
+            attr.Add(new KeyValuePair<string, string>("description", _dish.Desc));
+            attr.Add(new KeyValuePair<string, string>("site_name", "foodzfame.com"));
+            attr.Add(new KeyValuePair<string, string>("locale", "en_US"));
+            ViewBag.MetaTag = Utils.RecipeMetaTags(tags.Distinct().ToArray(), _dish.Desc, attr);
             return View("Index");
         }
         public IActionResult AddLike(int id)
