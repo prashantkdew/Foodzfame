@@ -67,9 +67,16 @@ namespace Foodzfame2.Controllers
             List<string> tags = new List<string>();
             tags.AddRange(Category.Select(s=>s.Category1));
             tags.AddRange(((List<Dish>)ViewBag.popularPosts).Select(s=>s.DishName));
-            tags.AddRange(((List<Dish>)ViewBag.popularPosts).Select(s=>s.Tags));
             tags.Add("foodblog food blog recipe recipes spicy tangy indianfood indianrecipe indiancuisine foodcategory category Every day recipe fastfood");
-            ViewBag.MetaTag = Utils.RecipeMetaTags(tags.Distinct().ToArray(), "A Food blog, Foodsfame is a food blog containing recipes, tips, tricks for cooking and also blogs (which contains health benefits, Nutrional facts, diabetic information of foods etc.)");
+            List<KeyValuePair<string, string>> attr = new List<KeyValuePair<string, string>>();
+            attr.Add(new KeyValuePair<string, string>("title", "Foodzfame a food blog"));
+            attr.Add(new KeyValuePair<string, string>("url", "https://foodzfame.com"));
+            attr.Add(new KeyValuePair<string, string>("image", "https://foodzfame.com/img/bg1.jpg"));
+            attr.Add(new KeyValuePair<string, string>("type", "website"));
+            attr.Add(new KeyValuePair<string, string>("description", "A Food blog, Foodsfame is a food blog containing recipes, tips, tricks for cooking and also blogs (which contains health benefits, Nutrional facts, diabetic information of foods etc.)"));
+            attr.Add(new KeyValuePair<string, string>("site_name", "foodzfame.com"));
+            attr.Add(new KeyValuePair<string, string>("locale", "en_US"));
+            ViewBag.MetaTag = Utils.RecipeMetaTags(tags.Distinct().ToArray(), "A Food blog, Foodsfame is a food blog containing recipes, tips, tricks for cooking and also blogs (which contains health benefits, Nutrional facts, diabetic information of foods etc.)", attr);
             return View();
         }
         [OutputCache(Duration = 604800)]

@@ -61,7 +61,15 @@ namespace Foodzfame2.Controllers
                 List<string> tags = new List<string>();
                 tags.AddRange(searchInput.Dishes.Select(s=>s.DishName));
                 tags.AddRange(searchInput.Dishes.Select(s=>s.Tags));
-                ViewBag.MetaTag = Utils.RecipeMetaTags(tags.Distinct().ToArray(), "Search recipes with different filters, helps in finding the right recipe for you. Be it category wise, hashtags, difficulty or preparation time.");
+                List<KeyValuePair<string, string>> attr = new List<KeyValuePair<string, string>>();
+                attr.Add(new KeyValuePair<string, string>("title", "Foodzfame Recipes"));
+                attr.Add(new KeyValuePair<string, string>("url", "https://foodzfame.com/Recipe"));
+                attr.Add(new KeyValuePair<string, string>("image", "https://foodzfame.com/img/bg1.jpg"));
+                attr.Add(new KeyValuePair<string, string>("type", "website"));
+                attr.Add(new KeyValuePair<string, string>("description", "Search recipes with different filters, helps in finding the right recipe for you. Be it category wise, hashtags, difficulty or preparation time."));
+                attr.Add(new KeyValuePair<string, string>("site_name", "foodzfame.com"));
+                attr.Add(new KeyValuePair<string, string>("locale", "en_US"));
+                ViewBag.MetaTag = Utils.RecipeMetaTags(tags.Distinct().ToArray(), "Search recipes with different filters, helps in finding the right recipe for you. Be it category wise, hashtags, difficulty or preparation time.",attr);
                 return View("Recipes", searchInput); 
             }
             else

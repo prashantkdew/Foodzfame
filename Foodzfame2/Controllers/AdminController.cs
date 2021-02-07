@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 
 namespace Foodzfame2.Controllers
 {
-    [Authorize]
     public class AdminController : Controller
     {
         FoodzfameContext _dbContext;
