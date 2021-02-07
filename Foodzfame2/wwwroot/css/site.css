@@ -717,3 +717,26 @@ margin-top:2%;
         transform: rotate(360deg);
     }
 }
+#Notification {
+    display: none;
+    position: absolute;
+    right: 5%;
+    top: 800%;
+    color: black;
+    font-family: 'Ubuntu';
+    padding-top: .7%;
+    padding-left: 17px;
+    padding-right: 17px;
+    background: yellowgreen;
+    border-radius: 17px;
+    padding-bottom: 17px;
+}
+.notificationIcon {
+    font-size: xx-large !important;
+    position: absolute;
+    margin-left: -58px;
+}
+.Notificationmsg {
+    color: white;
+    margin-left: 15px;
+}

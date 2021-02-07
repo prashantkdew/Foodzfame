@@ -1,4 +1,5 @@
 using Foodzfame.Data.FoodzfameContext;
+using Foodzfame2.SignalRNotification;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -40,6 +41,7 @@ namespace Foodzfame2
             services.AddSession(options => {
                 options.IdleTimeout = TimeSpan.FromMinutes(3600);//You can set Time   
             });
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,6 +72,7 @@ namespace Foodzfame2
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHub<NotificationHub>("/notificationhub");
             });
         }
     }

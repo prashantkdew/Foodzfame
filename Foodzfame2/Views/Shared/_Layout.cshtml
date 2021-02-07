@@ -60,6 +60,7 @@
                 </ul>
             </div>
         </div>
+        <div id="Notification">test</div>
     </nav>
 
 
@@ -77,8 +78,8 @@
                     <h6><b>Important Links</b></h6>
                     <br />
                     <a style="color:white;" asp-controller="Recipe" asp-action="Index">Recipes</a><br />
-                    <a style="color:white;"  asp-controller="Category">Category</a><br />
-                    <a style="color:white;"  asp-controller="Blog">Blogs</a>
+                    <a style="color:white;" asp-controller="Category">Category</a><br />
+                    <a style="color:white;" asp-controller="Blog">Blogs</a>
                 </div>
                 <div class="col-sm-4">
                     <h6><b>Contact Us</b></h6>
@@ -89,7 +90,7 @@
 " aria-hidden="true"></i> <a style="color:white;" href="tel:+916361065953" class="float-left">+91-6361065953 </a><br />
                         <i class="fa fa-envelope" style="        margin-right: 10px;
         float: left;
-"  aria-hidden="true"></i> <a style="color:white;" href="mailto:info@foodzfame.com" class="float-left">info@foodzfame.com</a>
+" aria-hidden="true"></i> <a style="color:white;" href="mailto:info@foodzfame.com" class="float-left">info@foodzfame.com</a>
                     </span>
 
                 </div>
@@ -103,6 +104,8 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/NotificationScripts.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
