@@ -46,7 +46,8 @@ function likeRecipe(id) {
     $("#like").addClass("fa-thumbs-up");
     $("#like").removeClass("fa-thumbs-o-up");
     $.post("/Recipe/AddLike", { id: id }, function (data) {
-        $("#likes").html(data);
+        $("#likes").html(data.likes);
+        connection.invoke("SendMessage", connection.connection.connectionId, data.link)
     }); 
 }
 $('#reviewta').on('keyup', function (event) {
@@ -159,10 +160,10 @@ function addReview(id) {
     }
     else{
         $.post('/Recipe/AddReview/', { id: id, reviewerName: name, reviewTitle: reviewTitle, review: review, rating: rate }, function (data) {
-            if (data === 'Success') {
+            if (data.msg === 'Success') {
                 var newElement = '<div class="row">           <div class="col-sm-1">               <span>' + rate + '</span>               <i class="fa fa-star" aria-hidden="true"></i>           </div>           <div class="col-sm-8 reviewerName">' + name + ' says</div>           <div class="col-sm-3 float-right">' + new Date().toDateString() + '</div>       </div>   <div class="row" style="    padding-left: 10%;    font-weight: 500;">'+reviewTitle+'</div>    <div class="row">           <div class="reviews">' + review + '</div>       </div>';
                 $('#reviewComments').append(newElement);
-
+                connection.invoke("SendMessage", connection.connection.connectionId, data.link);
             }
         });
         for (var i = 1; i <= 5; i++) {

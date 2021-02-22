@@ -26,6 +26,7 @@ namespace Foodzfame2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddResponseCompression();
             services.AddAuthentication("CookieAuthentication")
                  .AddCookie("CookieAuthentication", config =>
                  {
@@ -42,6 +43,7 @@ namespace Foodzfame2
                 options.IdleTimeout = TimeSpan.FromMinutes(3600);//You can set Time   
             });
             services.AddSignalR();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,12 +62,13 @@ namespace Foodzfame2
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
             app.UseSession();
 
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseResponseCompression();
+            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {

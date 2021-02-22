@@ -90,7 +90,6 @@ namespace Foodzfame2.Controllers
                 return View("Recipes", filtered);
             }
         }
-        [OutputCache(Duration = 7200)]
         public IActionResult Recipe(int? id)
         {
             var _dish= _dbContext.Dishes
@@ -123,7 +122,7 @@ namespace Foodzfame2.Controllers
             recipe.Likes = (recipe.Likes==null?0:recipe.Likes) + 1;
             _dbContext.Dishes.Update(recipe);
             _dbContext.SaveChanges();
-            return Json(recipe.Likes);
+            return Json(new { recipe.Likes , link=string.Concat("<a style='color:white;' href='/Recipe/Recipe/",recipe.Id, "'>","Someone has liked ",recipe.DishName,"</a>") });
         }
         public IActionResult AddReview(string reviewerName,string reviewTitle,string review, int id,string rating )
         {
@@ -138,7 +137,8 @@ namespace Foodzfame2.Controllers
             };
             _dbContext.Reviews.Add(_);
             _dbContext.SaveChanges();
-            return Json("Success");
+            var recipe = _dbContext.Dishes.FirstOrDefault(x => x.Id == id);
+            return Json(new {msg= "Success",link= string.Concat("<a style='color:white;' href='/Recipe/Recipe/", recipe.Id, "'>", reviewerName, " has reviewed ", recipe.DishName, "</a>") });
         }
         [HttpPost]
         public JsonResult AutoComplete(string prefix)
@@ -211,5 +211,6 @@ namespace Foodzfame2.Controllers
             ViewBag.MetaTag = Utils.RecipeMetaTags(tags.Distinct().ToArray(), dish.FirstOrDefault().DishName+" Image gallery");
             return View();
         }
+
     }
 }

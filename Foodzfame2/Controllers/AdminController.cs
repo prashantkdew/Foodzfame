@@ -2,9 +2,11 @@
 using Foodzfame.Data.FoodzfameContext;
 using Foodzfame.Utility;
 using Foodzfame2.Models;
+using Foodzfame2.SignalRNotification;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +17,11 @@ namespace Foodzfame2.Controllers
     public class AdminController : Controller
     {
         FoodzfameContext _dbContext;
-        public AdminController(FoodzfameContext context)
+        private readonly IHubContext<NotificationHub> _hubContext;
+        public AdminController(FoodzfameContext context, IHubContext<NotificationHub> hubContext)
         {
             _dbContext = context;
+            _hubContext = hubContext;
         }
         public IActionResult Index()
         {
@@ -64,6 +68,7 @@ namespace Foodzfame2.Controllers
                 }
             }
             ViewBag.Success = "Successfully added the recipe";
+            _hubContext.Clients.All.SendAsync("ReceiveMessage",string.Empty, string.Concat("<a style='color:white;' href='/Recipe/Recipe/", recipe.Id, "'>", "A new recipe '", recipe.DishName, "' has just been added.</a>"));
             return RedirectToAction("Index");
         }
         public IActionResult AddSubCategory(AddRecipe subcatgry)

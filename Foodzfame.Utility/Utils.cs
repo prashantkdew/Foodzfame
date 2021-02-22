@@ -68,7 +68,9 @@ namespace Foodzfame.Utility
                     strMetaTag.AppendFormat(@"<meta name='og:{0}' content='{1}' />",item.Key,item.Value);
                 }
             }
-            strMetaTag.AppendFormat(@"<meta name='Keywords' content='{0}' />", string.Join(" ", keywords)); strMetaTag.AppendFormat(@"<meta name='Descption' content='{0}' />", description); 
+            strMetaTag.AppendFormat(@"<meta name='keywords' content='{0}' />", string.Join(" ", keywords)); 
+            strMetaTag.AppendFormat(@"<meta name='description' content='{0}' />", description); 
+            strMetaTag.AppendFormat(@"<meta name='robots' content='{0}' />", "index, follow");
             return strMetaTag.ToString();
 
         }

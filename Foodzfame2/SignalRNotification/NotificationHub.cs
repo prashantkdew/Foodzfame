@@ -8,9 +8,9 @@ namespace Foodzfame2.SignalRNotification
 {
     public class NotificationHub:Hub
     {
-        public async Task SendMessage(string message)
+        public async Task SendMessage(string client, string message)
         {
-            await Clients.All.SendAsync("ReceiveMessage", message);
+            await Clients.All.SendAsync("ReceiveMessage", client, message);
         }
     }
 }
