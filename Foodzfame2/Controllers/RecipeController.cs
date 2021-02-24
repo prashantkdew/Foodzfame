@@ -107,7 +107,7 @@ namespace Foodzfame2.Controllers
             attr.Add(new KeyValuePair<string, string>("title",_dish.DishName));
             attr.Add(new KeyValuePair<string, string>("url","https://foodzfame.com/Recipe/Recipe/"+id.ToString()));
             var base64 = Convert.ToBase64String(_dish.Img);
-            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+            var imgSrc = String.Format("data:image/svg;base64,{0}", base64);
             attr.Add(new KeyValuePair<string, string>("image", imgSrc));
             attr.Add(new KeyValuePair<string, string>("type", "article"));
             attr.Add(new KeyValuePair<string, string>("description", _dish.Desc));
@@ -195,6 +195,7 @@ namespace Foodzfame2.Controllers
                                on recipe.Id equals gallery.DishId
                              select new GalleryModel
                              {
+                                 Id= gallery.Id,
                                  DishId = recipe.Id,
                                  recipeName = recipe.DishName,
                                  Img = gallery.Img,

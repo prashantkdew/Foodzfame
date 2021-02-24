@@ -23,4 +23,8 @@
     <ProjectReference Include="..\Foodzfame.Utility\Foodzfame.Utility.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\dishes\" />
+  </ItemGroup>
+
 </Project>

@@ -90,7 +90,7 @@
                             <div class="border-radius">
                                 @{ 
                                     var base64 = Convert.ToBase64String(item.Img);
-                                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                                    var imgSrc = String.Format("data:image/svg;base64,{0}", base64);
                                     if (item.Desc != null && item.Desc.Length > 20)
                                         item.Desc = item.Desc.Substring(0, 19);
                                 }

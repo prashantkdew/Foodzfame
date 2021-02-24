@@ -54,11 +54,21 @@ else
             <div class="row">
                 @foreach (var item in gallery)
                 {
-                    var base64 = Convert.ToBase64String(item.Img);
-                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                    var filename = "../Foodzfame2/wwwroot/dishes/gallery_" + item.Id.ToString() + ".jpg";
+                    //var contentRootPath = (string)AppDomain.CurrentDomain.GetData("ContentRootPath");
+                    //var webRootPath = (string)AppDomain.CurrentDomain.GetData("WebRootPath");
+                    var url = string.Concat(Url.ActionContext.HttpContext.Request.Scheme, "://", Url.ActionContext.HttpContext.Request.Host.Value);
+                    var src = string.Concat(url, "/dishes/gallery_", item.Id.ToString(), ".jpg");
+                    if (item.Id == 0)
+                    {
+                        filename = filename.Replace(string.Concat("gallery_", item.Id.ToString()), string.Concat("dish_", item.DishId.ToString()));
+                        src = src.Replace(string.Concat("gallery_", item.Id.ToString()), string.Concat("dish_", item.DishId.ToString()));
+                    }
+                    if (!System.IO.File.Exists(filename))
+                        System.IO.File.WriteAllBytes(filename, item.Img);
                     <div class="col-sm-3 padding-bottom3pr">
                         <div class="border-radius">
-                            <img src='@imgSrc' name="galleryImg" class="zoom" id="galleryImg_@counter" onclick="OpenModal(@counter)" />
+                            <img src='@src' name="galleryImg" class="zoom" id="galleryImg_@counter" onclick="OpenModal(@counter)" />
                             <div class="dishTitle" id="galleryTitle_@counter" style=" text-align: center; margin-bottom: 2%;">
                                 @item.Title
                             </div>

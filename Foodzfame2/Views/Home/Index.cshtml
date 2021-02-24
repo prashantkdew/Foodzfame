@@ -52,10 +52,12 @@
                 <div class="col-sm-3 padding-bottom3pr">
                     <div class="border-radius">
                         @{
-                            var base64 = Convert.ToBase64String(dish.Img);
-                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                            var filename =  "../Foodzfame2/wwwroot/dishes/dish_" + dish.Id.ToString() + ".jpg";
+                            var src= "../dishes/dish_" + dish.Id.ToString() + ".jpg"; 
+                            if(!System.IO.File.Exists(filename))
+                            System.IO.File.WriteAllBytes(filename, dish.Img);
                         }
-                        <a asp-controller="Recipe" asp-action="Recipe" asp-route-id="@dish.Id"><img src='@imgSrc' class="zoom" /></a>
+                        <a asp-controller="Recipe" asp-action="Recipe" asp-route-id="@dish.Id"><img src='@src' class="zoom" /></a>
                         <div class="dishTitle">
                             @dish.DishCategory.Category
                         </div>
@@ -96,14 +98,16 @@
                 <div class="row">
                     @foreach (var item in blogs)
                     {
-                            var base64 = Convert.ToBase64String(item.Img);
-                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                            if (item.Benefits != null && item.Benefits.Length > 20)
-                                item.Benefits = item.Benefits.Substring(0, 19);
-                        
+                        var filename = "../Foodzfame2/wwwroot/dishes/blog_" + item.Id.ToString() + ".jpg";
+                        var src = "../dishes/blog_" + item.Id.ToString() + ".jpg";
+                        if (!System.IO.File.Exists(filename))
+                            System.IO.File.WriteAllBytes(filename, item.Img);
+                        if (item.Benefits != null && item.Benefits.Length > 20)
+                            item.Benefits = item.Benefits.Substring(0, 19);
+
                         <div class="col-sm-4 padding-bottom3pr">
                             <div class="border-radius">
-                                <a asp-controller="Blog" asp-action="Post" asp-route-id="@item.Id"> <img src="@imgSrc" class="zoom" /></a>
+                                <a asp-controller="Blog" asp-action="Post" asp-route-id="@item.Id"> <img src="@src" class="zoom" /></a>
                                 <div class="dishTitle">@item.Title</div>
                                 <div class="dishDesc">@item.Benefits</div>
                             </div>
