@@ -4,16 +4,10 @@
 @{
     var blogPost = (Foodzfame.Data.Entities.Blog)(ViewBag.Post);
     ViewData["Title"] = blogPost.Title;
-    var filename = "../Foodzfame2/wwwroot/dishes/blog_" + blogPost.Id.ToString() + ".jpg";
-    var url = string.Concat(Url.ActionContext.HttpContext.Request.Scheme, "://", Url.ActionContext.HttpContext.Request.Host.Value);
-
-    var src = string.Concat(url, "/dishes/blog_", blogPost.Id.ToString(), ".jpg");
-    if (!System.IO.File.Exists(filename))
-        System.IO.File.WriteAllBytes(filename, blogPost.Img);
-    //var base64 = Convert.ToBase64String(blogPost.Img);
-    //var imgSrc = String.Format("data:image/svg;base64,{0}", base64);
+    var base64 = Convert.ToBase64String(blogPost.Img);
+    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
 }
-<div class="row defaultHeader" style="background-image: url('@src')">
+<div class="row defaultHeader" style="background-image: url('@imgSrc')">
     <div class="overlay">
         <div class="container">
             <h1 class="recipeTitle">
@@ -36,18 +30,12 @@
                     {
                     <li>
                         @{
-                            filename = "../Foodzfame2/wwwroot/dishes/blogPost_" + item.Id.ToString() + ".jpg";
-                            url = string.Concat(Url.ActionContext.HttpContext.Request.Scheme, "://", Url.ActionContext.HttpContext.Request.Host.Value);
-
-                            src = string.Concat(url, "/dishes/blogPost_", item.Id.ToString(), ".jpg");
-                            if (!System.IO.File.Exists(filename))
-                                System.IO.File.WriteAllBytes(filename, item.Img);
-                            //base64 = Convert.ToBase64String(item.Img);
-                            //imgSrc = String.Format("data:image/svg;base64,{0}", base64);
+                            base64 = Convert.ToBase64String(item.Img);
+                            imgSrc = String.Format("data:image/gif;base64,{0}", base64);
                         }
                         <div class="row blogPostTitle">@item.Title</div>
                         <div class="row blogPostImg">
-                            <img src="@src" class="float-left" style="width:100%;" />
+                            <img src="@imgSrc" class="float-left" style="width:100%;" />
                             <div class="blogPostDesc float-left">@item.Desc</div>
                         </div>
                     </li>

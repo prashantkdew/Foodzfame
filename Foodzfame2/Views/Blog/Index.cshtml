@@ -66,23 +66,17 @@
         <div class="row">
             @for (int i = 1; i <= blogs.Count; i++)
             {
-                var filename = "../Foodzfame2/wwwroot/dishes/blog_" + blogs[i - 1].Id.ToString() + ".jpg";
-                var url = string.Concat(Url.ActionContext.HttpContext.Request.Scheme, "://", Url.ActionContext.HttpContext.Request.Host.Value);
-
-                var src = string.Concat(url, "/dishes/blog_", blogs[i - 1].Id.ToString(), ".jpg");
-                if (!System.IO.File.Exists(filename))
-                    System.IO.File.WriteAllBytes(filename, blogs[i - 1].Img);
-                //var base64 = Convert.ToBase64String(blogs[i - 1].Img);
-                //var imgSrc = String.Format("data:image/svg;base64,{0}", base64);
-                if (blogs[i - 1].Benefits != null && blogs[i - 1].Benefits.Length > 20)
-                    blogs[i - 1].Benefits = blogs[i - 1].Benefits.Substring(0, 19);
-
+                    var base64 = Convert.ToBase64String(blogs[i - 1].Img);
+                    var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                    if (blogs[i - 1].Benefits != null && blogs[i - 1].Benefits.Length > 20)
+                        blogs[i - 1].Benefits = blogs[i - 1].Benefits.Substring(0, 19);
+               
                 if (i > 6)
                 {
                     <div style="display:none" id="page_@i" class="col-sm-4 marBottom3pr">
                         <div class="border-radius">
 
-                            <a asp-action="Post" asp-route-id="@blogs[i - 1].Id"><img src="@src" class="zoom" /></a>
+                            <a asp-action="Post" asp-route-id="@blogs[i - 1].Id"><img src="@imgSrc" class="zoom" /></a>
                             <div class="dishTitle">@blogs[i - 1].Title</div>
                             <div class="dishDesc">@blogs[i - 1].Benefits</div>
                             <div class="author">by Nupoor's Kitchen</div>
@@ -93,7 +87,7 @@
                 {
                     <div id="page_@i" class="col-sm-4 marBottom3pr">
                         <div class="border-radius">
-                            <a asp-action="Post" asp-route-id="@blogs[i - 1].Id"><img src="@src" class="zoom" /></a>
+                            <a asp-action="Post" asp-route-id="@blogs[i - 1].Id"><img src="@imgSrc" class="zoom" /></a>
                             <div class="dishTitle">@blogs[i - 1].Title</div>
                             <div class="dishDesc">@blogs[i - 1].Benefits</div>
                             <div class="author">by Nupoor's Kitchen</div>
