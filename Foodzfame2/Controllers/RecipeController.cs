@@ -106,9 +106,9 @@ namespace Foodzfame2.Controllers
             List<KeyValuePair<string, string>> attr = new List<KeyValuePair<string, string>>();
             attr.Add(new KeyValuePair<string, string>("title",_dish.DishName));
             attr.Add(new KeyValuePair<string, string>("url","https://foodzfame.com/Recipe/Recipe/"+id.ToString()));
-            var base64 = Convert.ToBase64String(_dish.Img);
-            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-            attr.Add(new KeyValuePair<string, string>("image", imgSrc));
+            //var base64 = Convert.ToBase64String(_dish.Img);
+            //var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+            attr.Add(new KeyValuePair<string, string>("image", "https://foodzfame.com/dishes/dish_"+ _dish.Id.ToString()+".jpg"));
             attr.Add(new KeyValuePair<string, string>("type", "article"));
             attr.Add(new KeyValuePair<string, string>("description", _dish.Desc));
             attr.Add(new KeyValuePair<string, string>("site_name", "foodzfame.com"));
