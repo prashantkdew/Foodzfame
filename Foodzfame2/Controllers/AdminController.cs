@@ -69,6 +69,7 @@ namespace Foodzfame2.Controllers
             }
             ViewBag.Success = "Successfully added the recipe";
             _hubContext.Clients.All.SendAsync("ReceiveMessage",string.Empty, string.Concat("<a style='color:white;' href='/Recipe/Recipe/", recipe.Id, "'>", "A new recipe '", recipe.DishName, "' has just been added.</a>"));
+            Utils.Create(string.Concat("dish_",recipe.Id.ToString()), recipe.Img);
             return RedirectToAction("Index");
         }
         public IActionResult AddSubCategory(AddRecipe subcatgry)

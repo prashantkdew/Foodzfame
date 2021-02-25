@@ -52,10 +52,12 @@
                 <div class="col-sm-3 padding-bottom3pr">
                     <div class="border-radius">
                         @{
-                            var base64 = Convert.ToBase64String(dish.Img);
-                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                            var url = string.Concat(Url.ActionContext.HttpContext.Request.Scheme, "://", Url.ActionContext.HttpContext.Request.Host.Value);
+                            var src = string.Concat(url, "/dishes/dish_", dish.Id.ToString(), ".jpg");
+                            //var base64 = Convert.ToBase64String(dish.Img);
+                            //var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
                         }
-                        <a asp-controller="Recipe" asp-action="Recipe" asp-route-id="@dish.Id"><img src='@imgSrc' class="zoom" /></a>
+                        <a asp-controller="Recipe" asp-action="Recipe" asp-route-id="@dish.Id"><img src='@src' class="zoom" /></a>
                         <div class="dishTitle">
                             @dish.DishCategory.Category
                         </div>

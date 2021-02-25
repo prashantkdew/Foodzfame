@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -73,6 +75,49 @@ namespace Foodzfame.Utility
             strMetaTag.AppendFormat(@"<meta name='robots' content='{0}' />", "index, follow");
             return strMetaTag.ToString();
 
+        }
+        public static bool FileIsExist(string fileName)
+        {
+            try
+            {
+                FtpWebRequest request = (FtpWebRequest)WebRequest.Create(string.Concat("ftp://35.154.165.160/httpdocs/wwwroot/dishes/", fileName));
+                request.Method = WebRequestMethods.Ftp.ListDirectory;
+
+                request.Credentials = new NetworkCredential("foodzfam", "SO60@4jV@a6Dib");
+                FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+                Stream responseStream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(responseStream);
+                string names = reader.ReadToEnd();
+
+                reader.Close();
+                response.Close();
+
+                return names.Contains(fileName);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public static void Create(string fileName, byte[] fileContents)
+        {
+            // Get the object used to communicate with the server.
+            FtpWebRequest request = (FtpWebRequest)WebRequest.Create(string.Concat("ftp://35.154.165.160/httpdocs/wwwroot/dishes/", fileName));
+            request.Method = WebRequestMethods.Ftp.UploadFile;
+
+            // This example assumes the FTP site uses anonymous logon.
+            request.Credentials = new NetworkCredential("foodzfam", "SO60@4jV@a6Dib");
+
+            // Copy the contents of the file to the request stream.
+            request.ContentLength = fileContents.Length;
+
+            Stream requestStream = request.GetRequestStream();
+            requestStream.Write(fileContents, 0, fileContents.Length);
+            requestStream.Close();
+
+            FtpWebResponse response = (FtpWebResponse)request.GetResponse();
+
+            response.Close();
         }
     }
 }

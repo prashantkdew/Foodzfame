@@ -14,12 +14,14 @@
             <div class="col-sm-3 padding-bottom3pr">
                 <div class="border-radius">
                     @{
-                        var base64 = Convert.ToBase64String(item.Img);
-                        var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                        var url = string.Concat(Url.ActionContext.HttpContext.Request.Scheme, "://", Url.ActionContext.HttpContext.Request.Host.Value);
+                        var src = string.Concat(url, "/dishes/dish_", item.Id.ToString(), ".jpg");
+                        //var base64 = Convert.ToBase64String(item.Img);
+                        //var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
                         if (item.Desc != null && item.Desc.Length > 20)
                             item.Desc = item.Desc.Substring(0, 19);
                     }
-                    <a asp-controller="Recipe" asp-action="Recipe" asp-route-id="@item.Id"> <img src="@imgSrc" class="zoom" /></a>
+                    <a asp-controller="Recipe" asp-action="Recipe" asp-route-id="@item.Id"> <img src="@src" class="zoom" /></a>
                     <div class="dishTitle">
                         @if (item.EditorsChoice.HasValue && item.EditorsChoice.Value)
                         {
