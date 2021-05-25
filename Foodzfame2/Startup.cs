@@ -1,6 +1,8 @@
 using Foodzfame.Data.FoodzfameContext;
 using Foodzfame2.GraphQLModels;
 using Foodzfame2.SignalRNotification;
+using GraphQL.Client.Http;
+using GraphQL.Client.Serializer.Newtonsoft;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
@@ -52,9 +54,11 @@ namespace Foodzfame2
                 options.EnableForHttps = true;
                 options.Providers.Add<GzipCompressionProvider>();
             });
+            services.AddSingleton(x => new GraphQLHttpClient("https://localhost:44352/graphql/", new NewtonsoftJsonSerializer()));
             services.AddGraphQLServer()
                 .AddQueryType<Query>()
                 .AddType<DishQuery>()
+                .AddType<CategoryQuery>()
                 .AddProjections()
                 .AddFiltering()
                 .AddSorting();
