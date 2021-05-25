@@ -2,11 +2,15 @@
 using Foodzfame.Data.FoodzfameContext;
 using Foodzfame.Utility;
 using Foodzfame2.Models;
+using Foodzfame2.Models.GraphQLResponse;
+using GraphQL;
+using GraphQL.Client.Abstractions;
+using GraphQL.Client.Http;
+using GraphQL.Client.Serializer.Newtonsoft;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,29 +24,66 @@ namespace Foodzfame2.Controllers
         private readonly ILogger<HomeController> _logger;
         IDistributedCache _memoryCache;
         FoodzfameContext _dbContext;
-        public HomeController(ILogger<HomeController> logger, IDistributedCache distributedCache, FoodzfameContext context)
+        GraphQLHttpClient graphQLClient;
+        public HomeController(ILogger<HomeController> logger, IDistributedCache distributedCache, FoodzfameContext context, GraphQLHttpClient graphQLHttpClient)
         {
+            graphQLClient = graphQLHttpClient;
             _logger = logger;
             _memoryCache = distributedCache;
             _dbContext = context;
         }
         [OutputCache(Duration = 14400)]
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            var mostPopular = _memoryCache.Get("PopularPosts");
-            var popularPosts = new List<Dish>();
-            if (mostPopular==null)
+            // To use NewtonsoftJsonSerializer, add a reference to NuGet package GraphQL.Client.Serializer.Newtonsoft
+            //var graphQLClient = new GraphQLHttpClient("https://localhost:44352/graphql/", new NewtonsoftJsonSerializer());
+            var recipeRequest = new GraphQLRequest
             {
-                popularPosts = _dbContext.Dishes.AsEnumerable().OrderByDescending(n => n.Likes).Take(8).ToList();
-                var cacheOptions = new DistributedCacheEntryOptions
-                {
-                    AbsoluteExpiration = DateTime.Now.AddDays(7)
-                };
-                _memoryCache.Set("PopularPosts",Utils.ObjectToByteArray(popularPosts), cacheOptions);              
-            }
-            ViewBag.popularPosts = (List<Dish>)Utils.ByteArrayToObject(_memoryCache.Get("PopularPosts"));
-            ViewBag.recipeByCategory = _dbContext.Dishes.Include(x=>x.DishCategory).AsEnumerable().OrderByDescending(n => Guid.NewGuid()).Take(12).ToList();
-            var Category = _dbContext.Categories.Include(x => x.SubCategories).ToList();
+                Query = @"{
+                              dishes
+                              {
+                                nodes{
+                                  id,
+                                  dishName,
+                                  desc,
+                                  addedBy,
+                                  cookingTime,
+                                  dishCategory{
+                                                category,
+                                                des
+                                              }
+                                }
+                              }
+                            }"
+            };
+            var categoryRequest = new GraphQLRequest
+            {
+                Query= @"{
+                          categories{
+                            nodes{
+                              id,
+                              category1,
+                              des,
+                              subCategories{
+                                id,
+                                category,
+                                des,
+                                dishes{
+                                        id
+                                        }
+                              }
+                            }
+                          }
+                        }"
+            };
+
+            var recipeResult = await graphQLClient.SendQueryAsync(recipeRequest, () => new GraphQLResponseVm());
+            //ViewBag.popularPosts = (List<Dish>)Utils.ByteArrayToObject(_memoryCache.Get("PopularPosts"));
+            ViewBag.popularPosts = recipeResult.Data.dishes.nodes.AsEnumerable().OrderByDescending(x=>x.Likes).Take(8).ToList();
+            ViewBag.recipeByCategory = recipeResult.Data.dishes.nodes.AsEnumerable().OrderByDescending(n => Guid.NewGuid()).Take(12).ToList();
+            var categoryResult= await graphQLClient.SendQueryAsync(categoryRequest, () => new GraphQLResponseVm());
+            var Category = categoryResult.Data.categories.nodes;
+            var SubCategories = categoryResult.Data.categories.nodes.SelectMany(x => x.SubCategories);
             var Counters = new Counters();
             Counters.counts = new List<CategoryRecipeCounts>();
             foreach (var item in Category)
@@ -50,7 +91,7 @@ namespace Foodzfame2.Controllers
                 int counter = 0;
                 foreach(var subItem in item.SubCategories)
                 {
-                    counter += _dbContext.SubCategories.Include(x => x.Dishes).FirstOrDefault(x => x.Id == subItem.Id).Dishes.ToList().Count();
+                    counter += SubCategories.FirstOrDefault(x => x.Id == subItem.Id).Dishes.ToList().Count();
                 }
                 
                 Counters.counts.Add(new CategoryRecipeCounts()

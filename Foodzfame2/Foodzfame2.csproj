@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="GraphQL.Client" Version="3.2.3" />
+    <PackageReference Include="GraphQL.Client.Serializer.Newtonsoft" Version="3.2.3" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="11.2.2" />
+    <PackageReference Include="HotChocolate.Data" Version="11.2.2" />
+    <PackageReference Include="HotChocolate.Types" Version="11.2.2" />
+    <PackageReference Include="HotChocolate.Types.CursorPagination" Version="11.2.2" />
+    <PackageReference Include="HotChocolate.Types.Filters" Version="11.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Core" Version="1.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
@@ -15,6 +22,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
+    <PackageReference Include="RestSharp" Version="106.11.7" />
     <PackageReference Include="WebEssentials.AspNetCore.OutputCaching" Version="1.0.28" />
   </ItemGroup>
 
