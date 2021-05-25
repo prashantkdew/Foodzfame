@@ -54,6 +54,7 @@ namespace Foodzfame2
             });
             services.AddGraphQLServer()
                 .AddQueryType<Query>()
+                .AddType<DishQuery>()
                 .AddProjections()
                 .AddFiltering()
                 .AddSorting();
