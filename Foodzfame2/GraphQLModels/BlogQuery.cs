@@ -11,18 +11,19 @@ using System.Threading.Tasks;
 namespace Foodzfame2.GraphQLModels
 {
     [ExtendObjectType(typeof(Query))]
-    public class CategoryQuery
+    public class BlogQuery
     {
         [UsePaging(IncludeTotalCount = true)]
         [UseProjection]
         [HotChocolate.Data.UseFiltering]
         [UseSorting]
-        public IQueryable<Category> GetCategories([Service] FoodzfameContext dbContext) => dbContext.Categories;
+        public IQueryable<Blog> GetBlogs([Service] FoodzfameContext dbContext) => dbContext.Blogs;
 
         [UsePaging(IncludeTotalCount = true)]
         [UseProjection]
         [HotChocolate.Data.UseFiltering]
         [UseSorting]
-        public IQueryable<SubCategory> GetSubCategories([Service] FoodzfameContext dbContext) => dbContext.SubCategories;
+        public IQueryable<BlogPost> GetBlogPosts([Service] FoodzfameContext dbContext) => dbContext.BlogPosts;
+
     }
 }

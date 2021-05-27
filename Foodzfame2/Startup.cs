@@ -59,6 +59,9 @@ namespace Foodzfame2
                 .AddQueryType<Query>()
                 .AddType<DishQuery>()
                 .AddType<CategoryQuery>()
+                .AddType<IngredientQuery>()
+                .AddType<GalleryQuery>()
+                .AddType<BlogQuery>()
                 .AddProjections()
                 .AddFiltering()
                 .AddSorting();

@@ -11,18 +11,12 @@ using System.Threading.Tasks;
 namespace Foodzfame2.GraphQLModels
 {
     [ExtendObjectType(typeof(Query))]
-    public class CategoryQuery
+    public class GalleryQuery
     {
         [UsePaging(IncludeTotalCount = true)]
         [UseProjection]
         [HotChocolate.Data.UseFiltering]
         [UseSorting]
-        public IQueryable<Category> GetCategories([Service] FoodzfameContext dbContext) => dbContext.Categories;
-
-        [UsePaging(IncludeTotalCount = true)]
-        [UseProjection]
-        [HotChocolate.Data.UseFiltering]
-        [UseSorting]
-        public IQueryable<SubCategory> GetSubCategories([Service] FoodzfameContext dbContext) => dbContext.SubCategories;
+        public IQueryable<Gallery> GetGalleryImages([Service] FoodzfameContext dbContext) => dbContext.Galleries;
     }
 }

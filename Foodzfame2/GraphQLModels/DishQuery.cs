@@ -18,5 +18,11 @@ namespace Foodzfame2.GraphQLModels
         [HotChocolate.Data.UseFiltering]
         [UseSorting]
         public IQueryable<Dish> GetDishes([Service] FoodzfameContext dbContext) => dbContext.Dishes;
+
+        [UsePaging(IncludeTotalCount = true)]
+        [UseProjection]
+        [HotChocolate.Data.UseFiltering]
+        [UseSorting]
+        public IQueryable<Review> GetReviews([Service] FoodzfameContext dbContext) => dbContext.Reviews;
     }
 }
